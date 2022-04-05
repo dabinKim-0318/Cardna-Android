@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseCardMeData
+import org.cardna.data.remote.model.insight.ResponseInsightData
 import org.cardna.domain.repository.CardRepository
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import timber.log.Timber
@@ -20,7 +21,7 @@ class CardPackViewModel @Inject constructor(
 ) : ViewModel() { // CardPack, CardYou, CardMeFragment 가 CardPackViewModel 공유
 
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
-    private var _id: Int? = null
+    private var _id: Int?=0
     val id: Int?
         get() = _id
 
@@ -35,8 +36,8 @@ class CardPackViewModel @Inject constructor(
         get() = _totalCardCnt
 
     // 카드나 list => CardMeFragement 에서 사용
-    private var _cardMeList: MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>? = null // val 로 해줘도 되나 ?
-    val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>?
+    private val _cardMeList = MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>()
+    val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>
         get() = _cardMeList
 
 
