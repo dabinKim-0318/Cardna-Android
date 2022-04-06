@@ -1,11 +1,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="cardPackViewModel"
             type="org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel" />
+
+        <variable
+            name="cardPackFragment"
+            type="org.cardna.presentation.ui.cardpack.view.CardPackFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="남으것"
+    android:visibility="@{cardPackViewModel.id==0 ? View.GONE : View.VISIBLE }"
+    android:textColor="@color/white"
+    android:textSize="40dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
             <TextView
                 android:id="@+id/tv_cardpack_title"
                 android:layout_width="wrap_content"
@@ -30,6 +45,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="카드팩"
                 android:theme="@style/fragment_title_text"
+                android:visibility="@{cardPackViewModel.id==0 ? View.VISIBLE : View.GONE }"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@{cardPackViewModel.totalCardCnt.toString()}"
+                android:visibility="@{cardPackViewModel.id==0 ? View.VISIBLE : View.GONE }"
                 android:textColor="@color/white_3"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_cardpack_title"
                 app:layout_constraintStart_toEndOf="@+id/tv_cardpack_title"
@@ -61,7 +78,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/ic_cardpack_add_card"
+                    android:background="@{cardPackFragment.userId==0 ? @drawable/ic_cardpack_add_card : @drawable/ic_cardpack_gallery}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

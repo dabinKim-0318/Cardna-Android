@@ -20,47 +20,49 @@ class CardPackViewModel @Inject constructor(
     private val cardRepository: CardRepository, // 이렇게 쓰는 거 맞나
 ) : ViewModel() { // CardPack, CardYou, CardMeFragment 가 CardPackViewModel 공유
 
-    // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
-    private var _id: Int?=0
-    val id: Int?
-        get() = _id
+    private var _id: Int? = null  //뷰모델 객체가 각자 생성된다면 id없이 넘어올때 따로 null로 세팅안해줘도됨
+    val id: Int? get() = _id
 
-    // 어떤 name 의 사람의 카드팩 프래그먼트에 접근하는지
     private var _name: String? = null
     val name: String?
         get() = _name
 
-    // 그 사람의 카드팩의 총 카드 개수 => CardPackFragment 의 textView 에 바인딩
     private val _totalCardCnt = MutableLiveData<Int>(1) // liveData 가 아니더라도 뷰에 바인딩 가능한가 ?
     val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
 
-    // 카드나 list => CardMeFragement 에서 사용
     private val _cardMeList = MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>()
     val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>
         get() = _cardMeList
 
 
     fun setUserId(id: Int?) {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",id.toString() ?: "널인딩")
         _id = id
-    } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
+    }
 
     fun setUserName(name: String?) {
         _name = name
     }
 
-    fun setTotalCardCnt() {
-        viewModelScope.launch {
-            // 수정 필요
-//            try {
-//                _totalCardCnt = ApiService.cardService.getCardAll().data.totalCardCnt
-//            } catch (e: Exception) {
-//                Log.d("2LogIn test Log",e.toString())
-//            }
-        }
-    }
+    /* fun setTotalCardCnt() {
+         viewModelScope.launch {
+             viewModelScope.launch {
+                 runCatching {
+                     cardRepository.getCardMe().data
+                 }.onSuccess {
+                     it.apply {
+                         _cardMeList?.value = it.cardMeList
+                     }
+                 }.onFailure {
+                     Timber.e(it.toString())
+                 }
+             }
+         }
+     }*/
 
     fun updateCardMeList() {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",_id.toString() ?: "널인딩")
         if (_id == null) { // 본인의 카드나 접근
             viewModelScope.launch {
                 runCatching {
@@ -79,12 +81,19 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getOtherCardMe(_id!!).data
                 }.onSuccess {
                     it.apply {
-                        _cardMeList?.value= it.cardMeList
+                        _cardMeList?.value = it.cardMeList
                     }
                 }.onFailure {
                     Timber.e(it.toString())
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","뷰모델 죽어용")
+        //1. 내가 내 카드팩볼떄 생성된 뷰모델객체라면 메인액티비티 즉 앱이 꺼질때 뷰모델 파괴됨
+        //2. 친구 액티비티 만들어질때 생성된 뷰모델객체라면 친구 액티비티 finish될 때 뷰모델 파괴됨
+        super.onCleared()
     }
 }

@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
+import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 
@@ -31,6 +32,9 @@ class MainCardFragment :
         setObserver()
         initAdapter()
         setClickListener()
+        binding.ivMaincardGotoCardpackBackground.setOnClickListener {
+            startActivity(Intent(requireContext(), FriendCardPackActivity::class.java).putExtra("id", 8))
+        }
     }
 
     override fun onResume() {
@@ -40,7 +44,7 @@ class MainCardFragment :
 
     //onResume 에 뿌려질 데이터
     private fun initData() {
-    //    mainCardViewModel.getMainCardList()
+        //    mainCardViewModel.getMainCardList()
     }
 
     //adapter 관련 모음

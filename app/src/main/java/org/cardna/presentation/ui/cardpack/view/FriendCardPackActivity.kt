@@ -1,18 +1,20 @@
 package org.cardna.presentation.ui.cardpack.view
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityFriendCardPackBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 
 @AndroidEntryPoint
 class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriendCardPackBinding>(R.layout.activity_friend_card_pack) {
-    private var id: Int = 8
+    private var id: Int = 0
     var name: String = "지우"
+
+  //  private val cardPackViewModel: CardPackViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,19 +23,21 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
     }
 
     override fun initView() {
-        id = intent.getIntExtra("id", 8)
-        name = intent.getStringExtra("name") ?: ""
+        id = intent.getIntExtra("id", 0)
+        //cardPackViewModel.setUserId(id)
+        //      name = intent.getStringExtra("name") ?: ""
+
     }
 
 
     //디폴트로 연결되어 있을 Fragment 지정
     private fun setDefaultFragment() {
-        val bundle = Bundle()
+/*        val bundle = Bundle()
         bundle.putInt("id", id)
-        bundle.putString("name", name)
+        bundle.putString("name", name)*/
 
         val cardPackFragment = CardPackFragment()
-        cardPackFragment.arguments = bundle
+        //       cardPackFragment.arguments = bundle
         setFragmentWith(cardPackFragment)
     }
 

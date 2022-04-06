@@ -20,8 +20,12 @@ sealed class BaseViewUtil {
             savedInstanceState: Bundle?
         ): View? {
             _binding = DataBindingUtil.inflate(inflater, layout, container, false)
-            binding.lifecycleOwner = viewLifecycleOwner
             return binding.root
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            binding.lifecycleOwner = viewLifecycleOwner  //뷰의 lifecycler이 완전히 initialized상태로 업데이트 된 시점이므로 lifecycler을 전달
         }
 
         override fun onDestroyView() {
