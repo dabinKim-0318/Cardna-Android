@@ -32,6 +32,7 @@ class CardNaApplication : Application() {
     }
 
     private fun getFirebaseToken(){
+        CardNaRepository.fireBaseToken="f-YkGM9BRlewnpgxF_zAkA:APA91bGCRhQy2OjRUuCGnS5Equ2N0YV9ojIKlOMfMCv_38zzbXMsA63-UCkEJLMulQOiy3c0tHgB-jaae818blz2AvJ9Vt4ioAApJGe04ywCtPXtc6Qcm-l5f_reX_XmDBR4FNiZm09F"
         //파이어베이스 등록 후 다시 실행
 /*        FirebaseMessaging.getInstance().token.addOnCompleteListener(
             OnCompleteListener { task ->

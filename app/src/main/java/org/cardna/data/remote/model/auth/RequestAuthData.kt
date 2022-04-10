@@ -8,5 +8,5 @@ data class RequestAuthData(
     @SerializedName("uuid") val uuid: String = CardNaRepository.uuId,
     @SerializedName("lastName") val lastName: String,
     @SerializedName("firstName") val firstName: String,
-    @SerializedName("deviceToken") val deviceToken: String = "f-YkGM9BRlewnpgxF_zAkA:APA91bGCRhQy2OjRUuCGnS5Equ2N0YV9ojIKlOMfMCv_38zzbXMsA63-UCkEJLMulQOiy3c0tHgB-jaae818blz2AvJ9Vt4ioAApJGe04ywCtPXtc6Qcm-l5f_reX_XmDBR4FNiZm09F"
+    @SerializedName("deviceToken") val deviceToken: String = CardNaRepository.fireBaseToken
 )
