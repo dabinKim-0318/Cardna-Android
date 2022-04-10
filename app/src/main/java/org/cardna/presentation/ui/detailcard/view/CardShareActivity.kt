@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +15,10 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.example.cardna.R
 import com.example.cardna.databinding.ActivityCardShareBinding
-import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import com.example.cardna.R
 import org.cardna.presentation.util.shortToast
 import java.io.*
 
@@ -55,7 +54,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
             startActivity(Intent.createChooser(shareIntent, "친구에게 공유하기"))
         }
 
-        binding.tvSave.setOnClickListener{
+        binding.tvSave.setOnClickListener {
             setSaveClickListener()
         }
     }
@@ -85,17 +84,21 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         //drawBitmap() 메서드로 현재 화면에 그려진 뷰들로 비트맵을 그린다.
         //그러고 난 후에는 Q버전에 따라 나뉜다.
         val bitmap = drawBitmap()
+
+        //Q 버전 이상일 경우. (안드로이드 10, API 29 이상일 경우)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            //Q 버전 이상일 경우. (안드로이드 10, API 29 이상일 경우)
             saveImageOnAboveAndroidQ(bitmap)
             shortToast("이미지 저장 완료")
-        }else {
+        } else {
             // Q 버전 이하일 경우. 저장소 권한을 얻어온다.
             val writePermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-            if(writePermission == PackageManager.PERMISSION_GRANTED) {
+            //저장소 권한이 있다면
+            if (writePermission == PackageManager.PERMISSION_GRANTED) {
                 saveImageOnUnderAndroidQ(bitmap)
                 shortToast("이미지 저장 완료")
+
+                //저장소 권한이 없다면
             } else {
                 val requestExternalStorageCode = 1
 
@@ -114,23 +117,39 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         val backgroundWidth = resources.displayMetrics.widthPixels
         val backgroundHeight = resources.displayMetrics.heightPixels
 
-        val totalBitmap = Bitmap.createBitmap(backgroundWidth, backgroundHeight, Bitmap.Config.ARGB_8888) // 비트맵 생성
-        val canvas = Canvas(totalBitmap) // 캔버스에 비트맵을 Mapping.
+        //캔버스=스케치북을 담을 곳=스케치북에 그려진애들 매핑하는 곳, 스케치북에 그려지는거=이미지뷰비트맵(이미지뷰가 그려지는 곳)
+
+        //TODO 기기 해상도 캔버스
+
+        // 기기해상도에 따라 비트맵 생성 = 스케치북에 그려질 애들
+        val totalBitmap = Bitmap.createBitmap(backgroundWidth, backgroundHeight, Bitmap.Config.ARGB_8888)
+        // 캔버스에 스캐치북에 그려놓은 애들 매핑
+        val canvas = Canvas(totalBitmap)
+
+        //TODO 내가 그리는 이미지 캔버스
 
         /*imageViewCanvas를 통해서 imageView를 그린다.
          *이 때 스케치북은 imageViewBitmap이므로 imageViewBitmap에 imageView가 그려진다.
          */
-        val imageView = binding.ctlShare
+        val imageView = binding.ctlShare  //내가 그릴 이미지 뷰
+
+        //내가 그릴 이미지뷰에 대한 비트맵 생성 = 스케치북에 그려질 애들
         val imageViewBitmap = Bitmap.createBitmap(imageView.width, imageView.height, Bitmap.Config.ARGB_8888)
+        // 캔버스에 스케치북에 그려놓은 애들 매핑
         val imageViewCanvas = Canvas(imageViewBitmap)
+
+
+        //이미지뷰를 캔버스에 그려라
         imageView.draw(imageViewCanvas)
 
-        /*이미지가 그려질 곳 계산. 정 가운데에 ImageView를 그릴것이다.
-      * 기기의 가로크기 - 이미지의 가로크기 를 2로 나눈 후 왼쪽에 해당 크기만큼 마진을 준다.
-      * 세로 크기도 마찬가지로 계산해준다.
-      * */
+        //이미지가 그려질 곳 계산. 정 가운데에 ImageView를 그릴것이다.
+        //기기의 가로크기 - 이미지의 가로크기 를 2로 나눈 후 왼쪽에 해당 크기만큼 마진을 준다.
+        //세로 크기도 마찬가지로 계산해준다.
+
         val imageViewLeft = ((backgroundWidth - imageView.width) / 2).toFloat()
         val imageViewTop = ((backgroundHeight - imageView.height) / 2).toFloat()
+
+        //결과적으로 기기해상도 캔버스에 이미지뷰 비트맵을 그려라
         canvas.drawBitmap(imageViewBitmap, imageViewLeft, imageViewTop, null)
 
         return totalBitmap
@@ -147,20 +166,20 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         * */
         val contentValues = ContentValues()
         contentValues.apply {
-            put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/ImageSave") // 경로 설정
+            put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/CARDNA") // 경로 설정
             put(MediaStore.Images.Media.DISPLAY_NAME, fileName) // 파일이름을 put해준다.
-            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/png") //이미지 저장 양식
             put(MediaStore.Images.Media.IS_PENDING, 1) // 현재 is_pending 상태임을 만들어준다.
             // 다른 곳에서 이 데이터를 요구하면 무시하라는 의미로, 해당 저장소를 독점할 수 있다.
         }
         // 이미지를 저장할 uri를 미리 설정해놓는다.
         val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
         try {
-            if(uri != null) {
+            if (uri != null) {
                 val image = contentResolver.openFileDescriptor(uri, "w", null)
                 // write 모드로 file을 open한다.
 
-                if(image != null) {
+                if (image != null) {
                     val fos = FileOutputStream(image.fileDescriptor)
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
                     //비트맵을 FileOutputStream를 통해 compress한다.
@@ -171,7 +190,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
                     contentResolver.update(uri, contentValues, null, null)
                 }
             }
-        } catch(e: FileNotFoundException) {
+        } catch (e: FileNotFoundException) {
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
@@ -182,11 +201,13 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
 
     private fun saveImageOnUnderAndroidQ(bitmap: Bitmap) {
         val fileName = System.currentTimeMillis().toString() + ".png"
-        val externalStorage = Environment.getExternalStorageDirectory().absolutePath
-        val path = "$externalStorage/DCIM/imageSave"
+
+        //Environment.getExternalStorageDirectory()->deprecated됨 대신에 getExternalFilesDir
+        val externalStorage = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath
+        val path = "$externalStorage/DCIM/CARDNA"
         val dir = File(path)
 
-        if(dir.exists().not()) {
+        if (dir.exists().not()) {
             dir.mkdirs() // 폴더 없을경우 폴더 생성
         }
 
@@ -202,8 +223,12 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
 
             fos.close() // 파일 아웃풋 스트림 객체 close
 
-            sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(fileItem)))
-            // 브로드캐스트 수신자에게 파일 미디어 스캔 액션 요청. 그리고 데이터로 추가된 파일에 Uri를 넘겨준다.
+
+
+            MediaScannerConnection.scanFile(this, arrayOf(fileItem.toString()), null, null)
+
+            // sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(fileItem)))  ->이거 deprecated됨
+            // 브로드캐스트 수신자에게 파일 미디어 스캔 액션 요청. 그리고 데이터로 추가된 파일에 Uri를 넘겨준다.  ->이거 deprecated됨
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         } catch (e: IOException) {
