@@ -59,7 +59,7 @@ class LoginActivity :
                     val refreshToken = token.refreshToken
                     Log.e("kakao login", token.accessToken)
                     Log.e("kakao login", token.refreshToken)
-                    loginViewModel.loginWithKakao(accessToken)
+                    loginViewModel.loginWithKakao(accessToken, "kakao")
                 }
             }
         }
@@ -73,7 +73,7 @@ class LoginActivity :
     }
 
     private fun loginSuccessObserve() {
-        loginViewModel.kakaoLogInSuccess.observe(this) {
+        loginViewModel.kakaoLoginSuccess.observe(this) {
             if (it) startActivity(Intent(this@LoginActivity, SetNameActivity::class.java))
         }
     }

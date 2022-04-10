@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "717789708058",
+    "project_id": "baton-e9774",
+    "storage_bucket": "baton-e9774.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717789708058:android:74bba38d82c15eac5c76a3",
+        "android_client_info": {
+          "package_name": "com.depromeet.baton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717789708058-kjjg6f2oaomse52bie089dj9tk76b7gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.depromeet.baton",
+            "certificate_hash": "9707797d3e884920e38eea4dca0af467af687511"
+          }
+        },
+        {
+          "client_id": "717789708058-a8m109qop9rsgubmrn4bdc41v80tdre8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHIXwRosbJv7u0-33HcXelYgGpUBtuY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717789708058-a8m109qop9rsgubmrn4bdc41v80tdre8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

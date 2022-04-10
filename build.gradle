@@ -22,6 +22,8 @@ buildscript {
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
+        // Firebase
+        classpath 'com.google.gms:google-services:4.3.10'
     }
 }
 plugins {
