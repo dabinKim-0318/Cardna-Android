@@ -24,16 +24,25 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
     }
 
     override fun initView() {
- /*       val intent = Intent(android.content.Intent.ACTION_SEND)
-        var bitmap = BitmapFactory.decodeFile(photoList[index].file_path +'/'+ photoList[index].name)
-        bitmap =  MediaStore_Dao.modifyOrientaionById(this, photoList[index].photo_id, bitmap)*/
+        //공유하기 버튼을 누르면
+        binding.tvShare.setOnClickListener {
+
+            //view->bitmap: 공유하고싶은 이미지 ctl view를 bitmap으로 변환 후
+            val bitmap = viewToBitmap(binding.ctlShare)
+
+            //bitmap->url
+            val uri: Uri? = getImageUri(this, bitmap)
 
 
-      //  val uri: Uri? = getImageUri(this, bitmap)
-        intent.setType("image/*")
-      //  intent.putExtra(Intent.EXTRA_STREAM, uri)
-        val chooser = Intent.createChooser(intent, "친구에게 공유하기")
-        startActivity(chooser)
+            //인텐트에 url넣어서 시작하기
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = "image/jpeg"
+            }
+            startActivity(Intent.createChooser(shareIntent, "친구에게 공유하기"))
+        }
+
     }
 
     fun viewToBitmap(view: View): Bitmap {
@@ -58,3 +67,5 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
     }
 
 }
+
+
