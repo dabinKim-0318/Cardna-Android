@@ -1,0 +1,59 @@
+package org.cardna.presentation.ui.login
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import com.example.cardna.R
+import com.example.cardna.databinding.ActivitySplashBinding
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.presentation.MainActivity
+import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.util.StatusBarUtil
+
+class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initView()
+    }
+
+    override fun initView() {
+        StatusBarUtil.setStatusBar(this, R.color.black)
+        setFullScreen()
+        setNextActivity()
+    }
+
+    private fun setFullScreen() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+            window.insetsController?.let {
+                it.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    )
+        }
+    }
+
+    //스플레시 끝나고 실행되도록
+    private fun setNextActivity() {
+        //이름 없음->회원가입 완전히 안한놈->로그인액티비티로 ㄱㄱ
+        if (CardNaRepository.firstName.isEmpty()) {
+            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            finish()
+            //이름잇음->회원가입한놈->바로 메인으로
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+    }
+}

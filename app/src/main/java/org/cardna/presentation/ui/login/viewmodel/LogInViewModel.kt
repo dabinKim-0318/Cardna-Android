@@ -64,6 +64,8 @@ class LogInViewModel @Inject constructor(
                 )
             }.onSuccess {
                 CardNaRepository.userToken = it.data.accessToken  //서버가 준 토큰으로 갱신
+                CardNaRepository.firstName = it.data.name  //서버가 준 토큰으로 갱신
+            //    CardNaRepository.lastName = it.data.name  //서버가 준 토큰으로 갱신
                 Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
                 Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.message)
                 Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.name)

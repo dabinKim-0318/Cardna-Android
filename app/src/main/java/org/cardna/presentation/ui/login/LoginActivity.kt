@@ -27,10 +27,6 @@ class LoginActivity :
     override fun initView() {
         setClickListener()
         loginSuccessObserve()
-        if (CardNaRepository.userToken != "") {
-         //   CardNaRepository.userToken=""
-            startActivity(Intent(this, MainActivity::class.java))
-        }
     }
 
     private fun setClickListener() {

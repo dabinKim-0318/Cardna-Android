@@ -20,13 +20,20 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="org.cardna.presentation.ui.login.SplashActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity"
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.CardCreateActivity"
             android:exported="false" />
@@ -60,25 +67,17 @@
         <activity
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"></activity>
-
-        <activity android:name="org.cardna.presentation.ui.login.SetNameActivity"
-            android:exported="true"></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="org.cardna.presentation.ui.login.SetNameActivity"
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.login.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
-
         <activity
             android:name="org.cardna.presentation.ui.login.SetNameFinishedActivity"
-            android:exported="true"></activity>
-
+            android:exported="true" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
@@ -93,7 +92,6 @@
                     android:scheme="${kakaoKey}" />
             </intent-filter>
         </activity>
-
 
         <provider
             android:name="androidx.core.content.FileProvider"
