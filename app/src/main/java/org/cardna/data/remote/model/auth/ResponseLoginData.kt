@@ -9,9 +9,7 @@ class ResponseLoginData(
 ) {
     data class Data(
         val type: String,
-        val name: String,
-        val code: String,
-        val accessToken: String,
-        val refreshToken: String
+        val social: String,
+        val uuid: String
     )
 }

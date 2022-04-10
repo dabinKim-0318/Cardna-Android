@@ -24,7 +24,7 @@
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity"
-            android:exported="true" >
+            android:exported="true">
 
         </activity>
         <activity
@@ -35,13 +35,13 @@
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.detailcard.view.DetailCardActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
             android:exported="false" />
@@ -60,17 +60,40 @@
         <activity
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"></activity>
+
+        <activity android:name="org.cardna.presentation.ui.login.SetNameActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name="org.cardna.presentation.ui.login.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name="org.cardna.presentation.ui.login.SetNameFinishedActivity"
+            android:exported="true"></activity>
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth"
+                    android:scheme="${kakaoKey}" />
+            </intent-filter>
         </activity>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

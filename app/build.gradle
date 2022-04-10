@@ -5,6 +5,10 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def kakao_key_manifest = properties.getProperty("kakao_key_manifest")
+
 android {
     compileSdk 31
 
@@ -14,8 +18,11 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //카카오
+        manifestPlaceholders = [kakaoKey: kakao_key_manifest]
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties["kakao_native_app_key"]
     }
 
     buildTypes {
@@ -77,6 +84,8 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     implementation "de.hdodenhof:circleimageview:$circleimageview_version" //Circle ImageView
+
+    implementation "com.kakao.sdk:v2-user:$kakaoLogInVersion"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

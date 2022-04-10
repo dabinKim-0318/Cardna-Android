@@ -1,6 +1,10 @@
 package org.cardna
 
 import android.app.Application
+import android.util.Log
+import com.example.cardna.BuildConfig
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.HiltAndroidApp
 import org.cardna.presentation.util.PixelRatio
 import timber.log.Timber
@@ -11,6 +15,8 @@ class CardNaApplication : Application() {
         super.onCreate()
         initPixelUtil()
         initLogger()
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+    Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",Utility.getKeyHash(this).toString())
     }
 
     private fun initPixelUtil() {

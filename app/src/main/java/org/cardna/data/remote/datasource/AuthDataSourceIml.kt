@@ -9,8 +9,8 @@ class AuthDataSourceIml @Inject constructor(
     private val authService: AuthService
 ) : AuthDataSource {
 
-    override suspend fun getLogin(social: String, body: RequestLoginData): ResponseLoginData {
-        return authService.getLogin(social, body)
+    override suspend fun getLogin(social: String): ResponseLoginData {
+        return authService.getLogin(social=social)
     }
 }
 
