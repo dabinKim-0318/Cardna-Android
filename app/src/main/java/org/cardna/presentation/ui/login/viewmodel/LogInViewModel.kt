@@ -56,12 +56,14 @@ class LogInViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 authRepository.postAuth(
+                    //리퀘스트 데이터 나머지부분은 쉐프에 꽂아둔거 바로 박아둠
                     RequestAuthData(
-                        lastName = "다빈",
-                        firstName = "김"
+                        lastName = "박",  //이름 뷰에서 받아옴
+                        firstName = "종찬"  //이름 뷰에서 바다옴
                     )
                 )
             }.onSuccess {
+                CardNaRepository.userToken = it.data.accessToken  //서버가 준 토큰으로 갱신
                 Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
                 Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.message)
                 Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.name)

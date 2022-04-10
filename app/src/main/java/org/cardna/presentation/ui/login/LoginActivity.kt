@@ -9,6 +9,8 @@ import com.example.cardna.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LogInViewModel
 
@@ -25,6 +27,10 @@ class LoginActivity :
     override fun initView() {
         setClickListener()
         loginSuccessObserve()
+        if (CardNaRepository.userToken != "") {
+         //   CardNaRepository.userToken=""
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     private fun setClickListener() {
