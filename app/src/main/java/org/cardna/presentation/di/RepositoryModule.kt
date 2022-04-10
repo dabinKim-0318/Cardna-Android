@@ -48,4 +48,10 @@ object RepositoryModule {
     fun provideFriendRepository(friendDataSource: FriendDataSource): FriendRepository {
         return FriendRepositoryImpl(friendDataSource)
     }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(authDataSource: AuthDataSource): AuthRepository {
+        return AuthRepositoryImpl(authDataSource)
+    }
 }

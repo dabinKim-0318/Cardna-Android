@@ -1,11 +1,10 @@
 package org.cardna.data.remote.api.friend
 
 import org.cardna.data.remote.model.friend.*
-import org.cardna.data.remote.model.like.RequestLikeData
-import org.cardna.data.remote.model.like.ResponseLikeData
-import org.cardna.data.remote.model.user.RequestDeleteUserData
-import org.cardna.data.remote.model.user.ResponseDeleteUserData
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface FriendService {
 
