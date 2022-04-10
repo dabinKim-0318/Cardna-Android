@@ -1,13 +1,16 @@
 package org.cardna.presentation.ui.login.viewmodel
 
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.remote.model.auth.RequestAuthData
 import org.cardna.data.remote.model.auth.RequestLoginData
 import org.cardna.domain.repository.AuthRepository
 import org.cardna.domain.repository.CardRepository
@@ -38,8 +41,8 @@ class LogInViewModel @Inject constructor(
                 it.run {
                     CardNaRepository.uuId = data.uuid  //유저아이디 저장
                     CardNaRepository.social = data.social  //소셜타입저장
-                    Log.d("ㅡㅡㅡㅡㅡㅡㅡ  CardNaRepository.uuIdㅡㅡㅡㅡㅡㅡㅡ",         CardNaRepository.uuId.toString())
-                    Log.d("ㅡㅡㅡㅡㅡㅡCardNaRepository.socialㅡㅡㅡㅡㅡㅡㅡㅡ",   CardNaRepository.social)
+                    Log.d("ㅡㅡㅡㅡㅡㅡㅡ  CardNaRepository.uuIdㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId.toString())
+                    Log.d("ㅡㅡㅡㅡㅡㅡCardNaRepository.socialㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
 
                 }
             }.onFailure {
@@ -49,4 +52,25 @@ class LogInViewModel @Inject constructor(
         }
     }
 
+    fun postAuth() {
+        viewModelScope.launch {
+            runCatching {
+                authRepository.postAuth(
+                    RequestAuthData(
+                        lastName = "다빈",
+                        firstName = "김"
+                    )
+                )
+            }.onSuccess {
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.message)
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.name)
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.code)
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.accessToken)
+
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
 }

@@ -10,6 +10,7 @@ import android.text.Spannable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.core.widget.addTextChangedListener
@@ -18,12 +19,13 @@ import com.example.cardna.databinding.ActivitySetNameBinding
 import com.example.cardna.databinding.AlertSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.login.viewmodel.LogInViewModel
 import org.cardna.presentation.util.LinearGradientSpan
 
 @AndroidEntryPoint
 class SetNameActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySetNameBinding>(R.layout.activity_set_name) {
-
+    private val loginViewModel: LogInViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -32,10 +34,13 @@ class SetNameActivity :
     override fun initView() {
         setClickListener()
         setChangedListener()
+        binding.btnSignUpNameAccess.setOnClickListener{
+            loginViewModel.postAuth()
+        }
     }
 
     private fun setClickListener() {
-        initAlertDialog()
+      //  initAlertDialog()
     }
 
     private fun setChangedListener() {
