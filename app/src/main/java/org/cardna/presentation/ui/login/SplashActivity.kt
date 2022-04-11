@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySplashBinding
+import com.navercorp.nid.oauth.NidOAuthLogin
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
@@ -24,7 +26,17 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
-        CardNaRepository.firstName=""
+/*       CardNaRepository.firstName=""
+       CardNaRepository.lastName=""
+       CardNaRepository.firstName=""
+       CardNaRepository.userToken=""
+       CardNaRepository.social=""
+       CardNaRepository.uuId=""*/
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.firstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.lastName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId)
         setNextActivity()
     }
 
@@ -51,11 +63,13 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     //스플레시 끝나고 실행되도록
     private fun setNextActivity() {
         //이름 없음->회원가입 완전히 안한놈->로그인액티비티로 ㄱㄱ
-        if (CardNaRepository.firstName.isEmpty()) {
+        if (CardNaRepository.firstName.isEmpty()&&!CardNaRepository.logOut) {
             moveOnLogin()
             //이름잇음->회원가입한놈->바로 메인으로
-        } else {
+        } else if (CardNaRepository.firstName.isNotEmpty()&&!CardNaRepository.logOut) {
             moveMain()
+        } else if (CardNaRepository.logOut) {  //로그아웃 한 경우임
+            moveOnLogin()
         }
     }
 
@@ -65,6 +79,7 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
         }
         startNextActivityWithHandling(intent)
     }
+
     private fun moveMain() {
         val intent = Intent(baseContext, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

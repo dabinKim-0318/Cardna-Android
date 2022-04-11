@@ -6,13 +6,11 @@ import org.cardna.data.remote.model.user.RequestDeleteUserData
 import org.cardna.data.remote.model.user.RequestPostReportUserData
 import org.cardna.data.remote.model.user.ResponseDeleteUserData
 import org.cardna.data.remote.model.user.ResponsePostReportUserData
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UserService {
 
-    @DELETE("user")
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
     suspend fun deleteUser(
         @Body body: RequestDeleteUserData
     ): ResponseDeleteUserData

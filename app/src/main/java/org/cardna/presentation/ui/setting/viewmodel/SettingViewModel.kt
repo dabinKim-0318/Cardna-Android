@@ -1,11 +1,16 @@
 package org.cardna.presentation.ui.setting.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.remote.model.auth.RequestAuthData
+import org.cardna.data.remote.model.user.RequestDeleteUserData
+import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.ui.setting.view.SecessionActivity
 import timber.log.Timber
@@ -116,13 +121,15 @@ class SettingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            /*   CardNaRepository.userToken =
+                   "41To6amyvu08kH6GyI3d-Vg-BUCOec9_AJo6iAorDNQAAAGAF1_Y4g"*/
             runCatching {
-                //TODO 소셜로그인 연동시 처리
-                // userRepository.deleteUser( RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
+                userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
             }.onSuccess {
-
+                CardNaRepository.firstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
             }.onFailure {
                 Timber.e(it.toString())
+                Timber.e(it.message)
             }
         }
     }

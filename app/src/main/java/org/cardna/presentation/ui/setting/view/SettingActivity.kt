@@ -5,16 +5,21 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.viewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
 class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
+
+    private val settingViewModel: SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -59,8 +64,9 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         val confirmBtn = dialog.findViewById<Button>(R.id.tv_lougout_dialog_confirm)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_logout_dialog_cancel)
 
-        //TODO 로그아웃 확인 누르면 서버 통신
         confirmBtn.setOnClickListener {
+            //     CardNaRepository.userToken=""  //로그아웃 시 유저토큰을 없앰
+            CardNaRepository.logOut = true
             dialog.dismiss()
         }
 

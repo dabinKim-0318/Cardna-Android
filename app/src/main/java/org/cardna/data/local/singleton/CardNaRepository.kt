@@ -13,6 +13,7 @@ object CardNaRepository {
     private const val UUID_KEY = "UUID_KEY"  //유저아이디 저장
     private const val LAST_NAME = "LAST_NAME"
     private const val FIRST_NAME = "FIRST_NAME"
+    private const val LOG_OUT = "LOG_OUT"
 
     private const val PREF_KEY = "PREF_KEY"  //보안쉐프 만들떄 쓴키
     private const val AUTH_KEY = "AUTH_KEY"  //유저토큰 키
@@ -74,5 +75,10 @@ object CardNaRepository {
     var firstName: String
         get() = authPreferences.getString(FIRST_NAME, "") ?: ""
         set(value) = authPreferences.edit { it.putString(FIRST_NAME, value) }
+
+    //이름
+    var logOut: Boolean
+        get() = preferences.getBoolean(LOG_OUT, false)
+        set(value) = preferences.edit { it.putBoolean(LOG_OUT, value) }
 
 }

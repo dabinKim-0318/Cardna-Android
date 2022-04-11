@@ -1,6 +1,6 @@
 package org.cardna.data.remote.model.auth
 
-class ResponseLoginData(
+class ResponseSignUpData(
 
     val message: String,
     val status: Int,

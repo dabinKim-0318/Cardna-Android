@@ -11,10 +11,14 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
+import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LogInViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity :
@@ -73,25 +77,35 @@ class LoginActivity :
                 val accessToken = NaverIdLoginSDK.getAccessToken() ?: return
                 val refreshToken = NaverIdLoginSDK.getRefreshToken() ?: return
 
-                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",refreshToken.toString())
-                loginViewModel.loginWithNaver(refreshToken)
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", accessToken.toString())
 
+                loginViewModel.loginWithNaver(accessToken)
             }
         }
+        //  NidOAuthLogin().logout()
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
     }
 
     private fun setKakaoLogin() {
+        //기존 가입했던적 유무 조사
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.e("kakao login error", "카카오 로그인 실패", error)
+                Timber.e(error, "카카오 로그인 실패")
             } else if (token != null) {
                 UserApiClient.instance.me { user, error ->
                     val accessToken = token.accessToken
                     val refreshToken = token.refreshToken
                     Log.e("kakao login", token.accessToken)
                     Log.e("kakao login", token.refreshToken)
-                    loginViewModel.loginWithKakao(accessToken)
+
+                    //이름이 있었음->로그아웃하거나 토큰 만료됨: 그냥 로그인
+                    if (CardNaRepository.firstName != "") {
+                        loginViewModel.signInWithKakao(accessToken)
+                    }
+                    //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
+                    else if (CardNaRepository.firstName == "") {
+                        loginViewModel.signUpWithKakao(accessToken)
+                    }
                 }
             }
         }
@@ -104,12 +118,21 @@ class LoginActivity :
         }
     }
 
+
     private fun loginSuccessObserve() {
-        loginViewModel.loginWithKakaoSuccess.observe(this) {
+        loginViewModel.signUpWithKakaoSuccess.observe(this) {
             if (it) startActivity(Intent(this@LoginActivity, SetNameActivity::class.java))
         }
-        loginViewModel.loginWithNaverSuccess.observe(this) {
-            if (it) startActivity(Intent(this@LoginActivity, SetNameActivity::class.java))
+        loginViewModel.signInWithKakaoSuccess.observe(this) {
+            if (it) moveMain()
         }
+    }
+
+    private fun moveMain() {
+        startActivity(Intent(baseContext, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
+        finish()
     }
 }
