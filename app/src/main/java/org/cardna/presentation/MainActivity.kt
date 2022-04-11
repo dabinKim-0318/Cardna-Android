@@ -3,9 +3,11 @@ package org.cardna.presentation
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.view.CardPackFragment
@@ -30,6 +32,11 @@ class MainActivity :
     }
 
     override fun initView() {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.firstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.lastName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId)
         initBottomNavigation()
         setBottomNavigationSelectListener()
     }

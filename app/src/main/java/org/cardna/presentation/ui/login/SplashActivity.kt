@@ -26,12 +26,7 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
-/*       CardNaRepository.firstName=""
-       CardNaRepository.lastName=""
-       CardNaRepository.firstName=""
-       CardNaRepository.userToken=""
-       CardNaRepository.social=""
-       CardNaRepository.uuId=""*/
+
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.firstName)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.lastName)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
@@ -68,7 +63,8 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
             //이름잇음->회원가입한놈->바로 메인으로
         } else if (CardNaRepository.firstName.isNotEmpty()&&!CardNaRepository.logOut) {
             moveMain()
-        } else if (CardNaRepository.logOut) {  //로그아웃 한 경우임
+            //이름있음+로그아웃했음->로그인액티비티로 ㄱㄱ
+        } else if (CardNaRepository.logOut) {
             moveOnLogin()
         }
     }

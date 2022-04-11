@@ -38,7 +38,6 @@ class LogInViewModel @Inject constructor(
                 CardNaRepository.userToken = accessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
                 authRepository.getSignUp("kakao") //로그인 서버통신
             }.onSuccess {
-                _signUpWithKakaoSuccess.value = true
                 it.run {
                     CardNaRepository.uuId = data.uuid  //유저아이디 저장
                     CardNaRepository.social = data.social  //소셜타입저장
@@ -46,6 +45,8 @@ class LogInViewModel @Inject constructor(
                     Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId.toString())
                     Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
                     Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+
+                    _signUpWithKakaoSuccess.value = true
                 }
             }.onFailure {
                 _signUpWithKakaoSuccess.value = false
@@ -61,10 +62,10 @@ class LogInViewModel @Inject constructor(
                 CardNaRepository.userToken = accessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
                 authRepository.getSignIn("kakao") //로그인 서버통신
             }.onSuccess {
-                _signInWithKakaoSuccess.value = true
                 it.run {
                     CardNaRepository.userToken = data.accessToken  //유저코튼갱신
                     CardNaRepository.logOut = false
+                    _signInWithKakaoSuccess.value = true
                 }
             }.onFailure {
                 _signInWithKakaoSuccess.value = false
