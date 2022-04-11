@@ -3,6 +3,8 @@ package org.cardna.presentation.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
@@ -22,6 +24,7 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
+        CardNaRepository.firstName=""
         setNextActivity()
     }
 
@@ -49,11 +52,32 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     private fun setNextActivity() {
         //이름 없음->회원가입 완전히 안한놈->로그인액티비티로 ㄱㄱ
         if (CardNaRepository.firstName.isEmpty()) {
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            finish()
+            moveOnLogin()
             //이름잇음->회원가입한놈->바로 메인으로
         } else {
-            startActivity(Intent(this, MainActivity::class.java))
+            moveMain()
         }
+    }
+
+    private fun moveOnLogin() {
+        val intent = Intent(baseContext, LoginActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startNextActivityWithHandling(intent)
+    }
+    private fun moveMain() {
+        val intent = Intent(baseContext, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startNextActivityWithHandling(intent)
+    }
+
+    private fun startNextActivityWithHandling(intent: Intent) {
+        Handler(Looper.getMainLooper())
+            .postDelayed({
+                startActivity(intent)
+                finish()
+            }, 2000)
     }
 }

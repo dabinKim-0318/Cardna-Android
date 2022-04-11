@@ -34,8 +34,16 @@ class SetNameActivity :
     override fun initView() {
         setClickListener()
         setChangedListener()
+        setObserve()
         binding.btnSignUpNameAccess.setOnClickListener{
-            loginViewModel.postAuth()
+            loginViewModel.postAuth(binding.etSignupLastname.text.toString(),binding.etSignupFirstname.text.toString())
+        }
+    }
+
+    fun setObserve(){
+        loginViewModel.setNameSuccess.observe(this){
+
+            if(it) initAlertDialog()
         }
     }
 
@@ -68,7 +76,7 @@ class SetNameActivity :
     }
 
     private fun initAlertDialog() {
-        binding.btnSignUpNameAccess.setOnClickListener {
+        //binding.btnSignUpNameAccess.setOnClickListener {
             val dialog = Dialog(this)
             val dialogBinding = AlertSetNameBinding.inflate(dialog.layoutInflater)
             dialog.setContentView(dialogBinding.root)
@@ -88,7 +96,7 @@ class SetNameActivity :
 
             dialog.setCancelable(false)
             dialog.show()
-        }
+      //  }
     }
 
     private fun negativeClickListener(button: Button, dialog: Dialog) {

@@ -4,13 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import com.example.cardna.BuildConfig
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.log.NidLog
+import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
-import org.cardna.data.local.singleton.CardNaRepository
-import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LogInViewModel
 
@@ -48,7 +50,35 @@ class LoginActivity :
     }
 
     private fun setNaverLogin() {
+        NidLog.init()
+        NaverIdLoginSDK.initialize(
+            this,
+            BuildConfig.NAVER_API_CLIENT_ID,
+            BuildConfig.NAVER_API_CLIENT_SECRET,
+            BuildConfig.NAVER_API_APP_NAME
+        )
 
+        val oauthLoginCallback = object : OAuthLoginCallback {
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
+            }
+
+            override fun onFailure(httpStatus: Int, message: String) {
+                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                val errorDesc = NaverIdLoginSDK.getLastErrorDescription()
+                Log.e("naver login error : ", "errorCode:$errorCode, errorDesc:$errorDesc")
+            }
+
+            override fun onSuccess() {
+                val accessToken = NaverIdLoginSDK.getAccessToken() ?: return
+                val refreshToken = NaverIdLoginSDK.getRefreshToken() ?: return
+
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",refreshToken.toString())
+                loginViewModel.loginWithNaver(refreshToken)
+
+            }
+        }
+        NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
     }
 
     private fun setKakaoLogin() {
@@ -61,7 +91,7 @@ class LoginActivity :
                     val refreshToken = token.refreshToken
                     Log.e("kakao login", token.accessToken)
                     Log.e("kakao login", token.refreshToken)
-                    loginViewModel.loginWithKakao(accessToken, "kakao")
+                    loginViewModel.loginWithKakao(accessToken)
                 }
             }
         }
@@ -75,7 +105,10 @@ class LoginActivity :
     }
 
     private fun loginSuccessObserve() {
-        loginViewModel.kakaoLoginSuccess.observe(this) {
+        loginViewModel.loginWithKakaoSuccess.observe(this) {
+            if (it) startActivity(Intent(this@LoginActivity, SetNameActivity::class.java))
+        }
+        loginViewModel.loginWithNaverSuccess.observe(this) {
             if (it) startActivity(Intent(this@LoginActivity, SetNameActivity::class.java))
         }
     }
