@@ -77,9 +77,15 @@ class LoginActivity :
                 val accessToken = NaverIdLoginSDK.getAccessToken() ?: return
                 val refreshToken = NaverIdLoginSDK.getRefreshToken() ?: return
 
-                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", accessToken.toString())
+                //이름이 있었음->로그아웃하거나 토큰 만료됨: 그냥 로그인
+                if (CardNaRepository.firstName != "") {
+                    loginViewModel.signInWithNaver(accessToken)
+                }
+                //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
+                else if (CardNaRepository.firstName == "") {
+                    loginViewModel.signUpWithNaver(accessToken)
+                }
 
-                loginViewModel.loginWithNaver(accessToken)
             }
         }
         //  NidOAuthLogin().logout()

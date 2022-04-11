@@ -11,12 +11,12 @@ object CardNaRepository {
 
     private const val SOCIAL_KEY = "SOCIAL_KEY"
     private const val UUID_KEY = "UUID_KEY"  //유저아이디 저장
-    private const val LAST_NAME = "LAST_NAME"
     private const val FIRST_NAME = "FIRST_NAME"
     private const val LOG_OUT = "LOG_OUT"
 
     private const val PREF_KEY = "PREF_KEY"  //보안쉐프 만들떄 쓴키
-    private const val AUTH_KEY = "AUTH_KEY"  //유저토큰 키
+    private const val UT_KEY = "UT_KEY"  //유저토큰 키
+    private const val URT_KEY = "URT_KEY"  //유저토큰 키
     private const val FB_KEY = "FB_TOKEN" //파이어베이슨 토큰 키
 
     private lateinit var preferences: SharedPreferences
@@ -48,8 +48,13 @@ object CardNaRepository {
 
     //유저 토큰
     var userToken: String
-        get() = preferences.getString(AUTH_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(AUTH_KEY, value) }
+        get() = preferences.getString(UT_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(UT_KEY, value) }
+
+    //유저 리프레시 토큰
+    var userRefreshToken: String
+        get() = preferences.getString(URT_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(URT_KEY, value) }
 
     //파이어베이스 토큰
     var fireBaseToken: String
@@ -65,11 +70,6 @@ object CardNaRepository {
     var social: String
         get() = authPreferences.getString(SOCIAL_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(SOCIAL_KEY, value) }
-
-    //성
-    var lastName: String
-        get() = authPreferences.getString(LAST_NAME, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(LAST_NAME, value) }
 
     //이름
     var firstName: String

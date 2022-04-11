@@ -27,8 +27,9 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
 
+
+        CardNaRepository.uuId = "2196242659"
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.firstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.lastName)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId)
@@ -58,10 +59,10 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     //스플레시 끝나고 실행되도록
     private fun setNextActivity() {
         //이름 없음->회원가입 완전히 안한놈->로그인액티비티로 ㄱㄱ
-        if (CardNaRepository.firstName.isEmpty()&&!CardNaRepository.logOut) {
+        if (CardNaRepository.firstName.isEmpty() && !CardNaRepository.logOut) {
             moveOnLogin()
             //이름잇음->회원가입한놈->바로 메인으로
-        } else if (CardNaRepository.firstName.isNotEmpty()&&!CardNaRepository.logOut) {
+        } else if (CardNaRepository.firstName.isNotEmpty() && !CardNaRepository.logOut) {
             moveMain()
             //이름있음+로그아웃했음->로그인액티비티로 ㄱㄱ
         } else if (CardNaRepository.logOut) {
