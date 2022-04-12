@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.setting.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,6 +42,9 @@ class SettingViewModel @Inject constructor(
 
     private val _isSecessionReasonValid = MutableLiveData(false)
     val isSecessionReasonValid: LiveData<Boolean> = _isSecessionReasonValid
+
+    private val _isDeleteUserSuccess = MutableLiveData(false)
+    val isDeleteUserSuccess: LiveData<Boolean> = _isDeleteUserSuccess
 
     private val _secessionReasonList = MutableLiveData(mutableListOf<Int>())
     val secessionReasonList: LiveData<MutableList<Int>> = _secessionReasonList
@@ -118,13 +122,20 @@ class SettingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-        CardNaRepository.userToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInV1aWQiOiIyMTk2MjQyNjU5IiwibGFzdE5hbWUiOiLjhLkiLCJmaXJzdE5hbWUiOiLjhLkiLCJjb2RlIjoi44S544S5IzcwMDAiLCJpYXQiOjE2NDk3NjMyNDQsImV4cCI6MTY1MjM1NTI0NCwiaXNzIjoiY2FyZG5hIn0.TTqeNKlC5hpO43jKmTxU0qarMvXw0X4N6QX4XCJn9rI"
+            // CardNaRepository.userToken =
+            //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInV1aWQiOiI1UFRvTVd0TkZpRVpOc2loQnUxbDhSRmJVYjBkUkV4UEFHRENJU2thb0xFIiwibGFzdE5hbWUiOiLjhYUiLCJmaXJzdE5hbWUiOiLjhLfjhYUiLCJjb2RlIjoi44WF44S344WFIzU1MjYiLCJpYXQiOjE2NDk3NjYyMDksImV4cCI6MTY1MjM1ODIwOSwiaXNzIjoiY2FyZG5hIn0.7MOFF8OpFKmFFf88VAJwD8r0HTzZYApPtKyHhid1jIc"
             runCatching {
                 userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
             }.onSuccess {
-                CardNaRepository.kakaoUserfirstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",CardNaRepository.userSocial)
+                if (CardNaRepository.userSocial == "kakao") CardNaRepository.kakaoUserfirstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
+                else CardNaRepository.naverUserfirstName = ""
+
+
+                _isDeleteUserSuccess.value=true
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", _isDeleteUserSuccess.value.toString())
             }.onFailure {
+                _isDeleteUserSuccess.value=false
                 Timber.e(it.toString())
                 Timber.e(it.message)
             }

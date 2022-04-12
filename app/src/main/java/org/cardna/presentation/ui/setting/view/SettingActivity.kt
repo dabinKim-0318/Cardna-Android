@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import com.example.cardna.R
@@ -11,6 +12,7 @@ import com.example.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.login.LoginActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.showCustomDialog
@@ -64,14 +66,23 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_logout_dialog_cancel)
 
         confirmBtn.setOnClickListener {
-            //     CardNaRepository.userToken=""  //로그아웃 시 유저토큰을 없앰
-            CardNaRepository.kakaoUserlogOut = true
+            if (CardNaRepository.userSocial == "kakao") CardNaRepository.kakaoUserlogOut = true
+            else if (CardNaRepository.userSocial == "naver") CardNaRepository.naverUserlogOut = true
             dialog.dismiss()
+            moveToLoginActivity()
         }
 
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    private fun moveToLoginActivity() {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","간다")
+        startActivity(Intent(this, LoginActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 }
 

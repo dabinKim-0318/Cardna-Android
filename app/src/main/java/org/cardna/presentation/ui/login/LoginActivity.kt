@@ -33,15 +33,14 @@ class LoginActivity :
         setClickListener()
         loginSuccessObserve()
 
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoSocial)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUuId)
+        Log.d("ㅡㅡㅡㅡㅡㅡkakaoUserfirstNameㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserTokenㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserlogOutㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserlogOut.toString())
 
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserfirstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverSocial)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUuId)
+
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡnaverUserfirstNameㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡnaverUserTokenㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡnaverUserlogOutㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserlogOut.toString())
     }
 
     private fun setClickListener() {
@@ -97,12 +96,10 @@ class LoginActivity :
 
             }
         }
-        //  NidOAuthLogin().logout()
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
     }
 
     private fun setKakaoLogin() {
-        //기존 가입했던적 유무 조사
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 Timber.e(error, "카카오 로그인 실패")
@@ -141,6 +138,12 @@ class LoginActivity :
         loginViewModel.signInWithKakaoSuccess.observe(this) {
             if (it) moveMain()
         }
+        loginViewModel.signUpWithNaverSuccess.observe(this) {
+            if (it) startActivity(Intent(this@LoginActivity, SetNameActivity::class.java))
+        }
+        loginViewModel.signInWithNaverSuccess.observe(this) {
+            if (it) moveMain()
+        }
     }
 
     private fun moveMain() {
@@ -149,5 +152,10 @@ class LoginActivity :
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
         finish()
+    }
+
+    companion object{
+        const val KAKAO="kakao"
+        const val NAVER="naver"
     }
 }

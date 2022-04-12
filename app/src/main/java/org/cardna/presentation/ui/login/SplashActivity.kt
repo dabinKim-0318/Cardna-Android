@@ -24,17 +24,17 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
+       // CardNaRepository.kakaoUserlogOut = false
+
+        Log.d("ㅡㅡㅡㅡㅡㅡkakaoUserfirstNameㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserTokenㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserlogOutㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserlogOut.toString())
 
 
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoSocial)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUuId)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡnaverUserfirstNameㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡnaverUserTokenㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡnaverUserlogOutㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserlogOut.toString())
 
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserfirstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverSocial)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUuId)
         setNextActivity()
     }
 
@@ -58,32 +58,30 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
         }
     }
 
-    //스플레시 끝나고 실행되도록
+
     private fun setNextActivity() {
         //모든 소셜에서 이름이 없으면->회원가입 안함
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "모든 소셜에서 이름이 없으면->회원가입 안함")
             moveOnLogin()
 
             //카카오로 자동로그인
             //1. 카카오에 이름잇음+카카오에서 로그아웃 안함
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) { //카카오 토큰으로 인터셉트
             CardNaRepository.userToken = CardNaRepository.kakaoUserToken
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "카카오로 자동로그인")
             moveMain()
 
             //네이버로 자동로그인
             //2.네이버에 이름잇음+네이버에서 로그아웃 안함
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) { //네이버 토큰으로 인터셉트
             CardNaRepository.userToken = CardNaRepository.naverUserToken
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "네이버로 자동로그인")
             moveMain()
 
             //로그아웃
-            //카카오 이름있음+카카오에서 로그아웃한경우
-        } else if (CardNaRepository.kakaoUserlogOut) {
-            moveOnLogin()
-
-            //로그아웃
-            //네이버 이름있음+네이버에서 로그아웃 한경우
-        } else if (CardNaRepository.naverUserlogOut) {
+        } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "어딘가에서 로그아웃을 햇다")
             moveOnLogin()
         }
     }
