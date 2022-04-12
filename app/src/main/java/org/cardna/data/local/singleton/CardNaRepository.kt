@@ -9,15 +9,30 @@ import androidx.security.crypto.MasterKey
 object CardNaRepository {
 
 
-    private const val SOCIAL_KEY = "SOCIAL_KEY"
-    private const val UUID_KEY = "UUID_KEY"  //유저아이디 저장
-    private const val FIRST_NAME = "FIRST_NAME"
-    private const val LOG_OUT = "LOG_OUT"
+    //카카오
+    private const val KAKAO_SOCIAL_KEY = "KAKAO_SOCIAL_KEY" //소셜키
+    private const val KAKAO_UUID_KEY = "KAKAO_UUID_KEY"  //유저아이디
+    private const val KAKAO_USER_FIRST_NAME = "KAKAO_USER_FIRST_NAME" //유저네임
+    private const val KAKAO_USER_LOG_OUT = "KAKAO_USER_LOG_OUT" //로그아웃 유무
+    private const val KAKAO_UT_KEY = "KAKAO_UT_KEY"  //유저토큰 키
+    private const val KAKAO_URT_KEY = "KAKAO_"  //유저 리프레시토큰 키
 
-    private const val PREF_KEY = "PREF_KEY"  //보안쉐프 만들떄 쓴키
-    private const val UT_KEY = "UT_KEY"  //유저토큰 키
-    private const val URT_KEY = "URT_KEY"  //유저토큰 키
+    //네이버
+    private const val NAVER_SOCIAL_KEY = "NAVER_SOCIAL_KEY" //소셜키
+    private const val NAVER_UUID_KEY = "NAVER_UUID_KEY"  //유저아이디
+    private const val NAVER_USER_FIRST_NAME = "NAVER_USER_FIRST_NAME" //유저네임
+    private const val NAVER_USER_LOG_OUT = "NAVER_USER_LOG_OUT" //로그아웃 유무
+    private const val NAVER_UT_KEY = "NAVER_UT_KEY"  //유저토큰 키
+    private const val NAVER_URT_KEY = "NAVER_URT_KEY"  //유저리프레시토큰 키
+
     private const val FB_KEY = "FB_TOKEN" //파이어베이슨 토큰 키
+    private const val PREF_KEY = "PREF_KEY"  //보안쉐프 만들떄 쓴키
+
+    private const val UT_KEY = "UT_KEY"  //유저토큰 키
+
+    private const val USER_SOCIAL_KEY = "USER_SOCIAL_KEY" //소셜키
+
+    private const val USER_UUID_KEY = "USER_UUID_KEY" //소셜키
 
     private lateinit var preferences: SharedPreferences
     private lateinit var authPreferences: SharedPreferences
@@ -46,15 +61,30 @@ object CardNaRepository {
         editor.apply()
     }
 
-    //유저 토큰
+  //현재 유저 토큰
     var userToken: String
         get() = preferences.getString(UT_KEY, "") ?: ""
         set(value) = preferences.edit { it.putString(UT_KEY, value) }
 
+  //현재 유저 소셜
+    var userSocial: String
+        get() = preferences.getString(USER_SOCIAL_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(USER_SOCIAL_KEY, value) }
+
+  //현재 유저 아이디
+    var userUuid: String
+        get() = preferences.getString(USER_UUID_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(USER_UUID_KEY, value) }
+
+    //유저 토큰
+    var kakaoUserToken: String
+        get() = preferences.getString(KAKAO_UT_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(KAKAO_UT_KEY, value) }
+
     //유저 리프레시 토큰
-    var userRefreshToken: String
-        get() = preferences.getString(URT_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(URT_KEY, value) }
+    var kakaoUserRefreshToken: String
+        get() = preferences.getString(KAKAO_URT_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(KAKAO_URT_KEY, value) }
 
     //파이어베이스 토큰
     var fireBaseToken: String
@@ -62,23 +92,56 @@ object CardNaRepository {
         set(value) = preferences.edit { it.putString(FB_KEY, value) }
 
     //유저아이디
-    var uuId: String
-        get() = authPreferences.getString(UUID_KEY, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(UUID_KEY, value) }
+    var kakaoUuId: String
+        get() = authPreferences.getString(KAKAO_UUID_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(KAKAO_UUID_KEY, value) }
 
     //소셜 플랙폼
-    var social: String
-        get() = authPreferences.getString(SOCIAL_KEY, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(SOCIAL_KEY, value) }
+    var kakaoSocial: String
+        get() = authPreferences.getString(KAKAO_SOCIAL_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(KAKAO_SOCIAL_KEY, value) }
 
     //이름
-    var firstName: String
-        get() = authPreferences.getString(FIRST_NAME, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(FIRST_NAME, value) }
+    var kakaoUserfirstName: String
+        get() = authPreferences.getString(KAKAO_USER_FIRST_NAME, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(KAKAO_USER_FIRST_NAME, value) }
+
+    //로그아웃 유무
+    var kakaoUserlogOut: Boolean
+        get() = preferences.getBoolean(KAKAO_USER_LOG_OUT, false)
+        set(value) = preferences.edit { it.putBoolean(KAKAO_USER_LOG_OUT, value) }
+
+
+
+
+    //유저 토큰
+    var naverUserToken: String
+        get() = preferences.getString(NAVER_UT_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(NAVER_UT_KEY, value) }
+
+    //유저 리프레시 토큰
+    var naverUserRefreshToken: String
+        get() = preferences.getString(NAVER_URT_KEY, "") ?: ""
+        set(value) = preferences.edit { it.putString(NAVER_URT_KEY, value) }
+
+    //유저아이디
+    var naverUuId: String
+        get() = authPreferences.getString(NAVER_UUID_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(NAVER_UUID_KEY, value) }
+
+    //소셜 플랙폼
+    var naverSocial: String
+        get() = authPreferences.getString(NAVER_SOCIAL_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(NAVER_SOCIAL_KEY, value) }
 
     //이름
-    var logOut: Boolean
-        get() = preferences.getBoolean(LOG_OUT, false)
-        set(value) = preferences.edit { it.putBoolean(LOG_OUT, value) }
+    var naverUserfirstName: String
+        get() = authPreferences.getString(NAVER_USER_FIRST_NAME, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(NAVER_USER_FIRST_NAME, value) }
+
+    //로그아웃 유무
+    var naverUserlogOut: Boolean
+        get() = preferences.getBoolean(NAVER_USER_LOG_OUT, false)
+        set(value) = preferences.edit { it.putBoolean(NAVER_USER_LOG_OUT, value) }
 
 }

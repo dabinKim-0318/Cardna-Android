@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.setting.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.singleton.CardNaRepository
-import org.cardna.data.remote.model.auth.RequestAuthData
 import org.cardna.data.remote.model.user.RequestDeleteUserData
-import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.ui.setting.view.SecessionActivity
 import timber.log.Timber
@@ -121,12 +118,12 @@ class SettingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-     //     CardNaRepository.userToken =
-     //           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInV1aWQiOiIyMTk2MjQyNjU5IiwibGFzdE5hbWUiOiLjhLnjhLQiLCJmaXJzdE5hbWUiOiLjhLnjhLQiLCJjb2RlIjoi44S544S044S544S0IzEzNjAiLCJpYXQiOjE2NDk3NTkxNzMsImV4cCI6MTY1MjM1MTE3MywiaXNzIjoiY2FyZG5hIn0.80jgB8UDLtzlXOswSzjcsbtwjPMhmBkZ0Bdv2vRPW3Y"
+        CardNaRepository.userToken =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInV1aWQiOiIyMTk2MjQyNjU5IiwibGFzdE5hbWUiOiLjhLkiLCJmaXJzdE5hbWUiOiLjhLkiLCJjb2RlIjoi44S544S5IzcwMDAiLCJpYXQiOjE2NDk3NjMyNDQsImV4cCI6MTY1MjM1NTI0NCwiaXNzIjoiY2FyZG5hIn0.TTqeNKlC5hpO43jKmTxU0qarMvXw0X4N6QX4XCJn9rI"
             runCatching {
                 userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
             }.onSuccess {
-                CardNaRepository.firstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
+                CardNaRepository.kakaoUserfirstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
             }.onFailure {
                 Timber.e(it.toString())
                 Timber.e(it.message)

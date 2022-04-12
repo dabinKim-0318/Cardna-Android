@@ -11,7 +11,6 @@ import com.example.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.showCustomDialog
@@ -66,7 +65,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
 
         confirmBtn.setOnClickListener {
             //     CardNaRepository.userToken=""  //로그아웃 시 유저토큰을 없앰
-            CardNaRepository.logOut = true
+            CardNaRepository.kakaoUserlogOut = true
             dialog.dismiss()
         }
 

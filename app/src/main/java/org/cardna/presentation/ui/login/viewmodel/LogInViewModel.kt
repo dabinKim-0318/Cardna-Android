@@ -39,12 +39,12 @@ class LogInViewModel @Inject constructor(
                 authRepository.getSignUp("kakao") //로그인 서버통신
             }.onSuccess {
                 it.run {
-                    CardNaRepository.uuId = data.uuid  //서버에서 준 유저아이디 저장
-                    CardNaRepository.social = data.social  //서버에서 준 소셜타입저장
-                    //여기까지 하면 유저아이디, 소셜타입 저장되어있음 -> RequestAuthData 에 필요한 애들 저장 끝.
-                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId.toString())
-                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
-                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+                    //   CardNaRepository.kakaoUuId = data.uuid  //서버에서 준 유저아이디 저장
+                    //    CardNaRepository.kakaoSocial = data.social  //서버에서 준 소셜타입저장
+                    CardNaRepository.userUuid = data.uuid
+                    CardNaRepository.userSocial = data.social
+                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userUuid)
+                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userSocial)
 
                     _signUpWithKakaoSuccess.value = true
                 }
@@ -60,16 +60,16 @@ class LogInViewModel @Inject constructor(
         Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", "가입")
         viewModelScope.launch {
             runCatching {
-                CardNaRepository.userToken = accessToken  //일단 레파지토리에 카카오에서 준 토큰 저장함->인터셉트 하도록
+                CardNaRepository.kakaoUserToken = accessToken  //일단 레파지토리에 카카오에서 준 토큰 저장함->인터셉트 하도록
                 authRepository.getSignUp("naver") //로그인 서버통신
             }.onSuccess {
                 it.run {
-                    CardNaRepository.uuId = data.uuid  //서버에서 준 유저아이디 저장
-                    CardNaRepository.social = data.social  //서버에서 준 소셜타입저장
+                    CardNaRepository.kakaoUuId = data.uuid  //서버에서 준 유저아이디 저장
+                    CardNaRepository.kakaoSocial = data.social  //서버에서 준 소셜타입저장
                     //여기까지 하면 유저아이디, 소셜타입 저장되어있음 -> RequestAuthData 에 필요한 애들 저장 끝.
-                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId.toString())
-                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
-                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUuId.toString())
+                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoSocial)
+                    Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
 
                     _signUpWithKakaoSuccess.value = true
                 }
@@ -88,10 +88,11 @@ class LogInViewModel @Inject constructor(
                 authRepository.getSignIn("kakao") //로그인 서버통신
             }.onSuccess {
                 it.run {
-                    CardNaRepository.userToken = data.accessToken  //유저코튼갱신
-                    CardNaRepository.userToken = data.refreshToken  //유저리프레시토큰갱신
-                    CardNaRepository.logOut = false
-                    CardNaRepository.social = "kakao"
+                    CardNaRepository.kakaoUserToken = data.accessToken  //유저코튼갱신
+                    CardNaRepository.kakaoUserRefreshToken = data.refreshToken  //유저리프레시토큰갱신
+                    CardNaRepository.kakaoUserlogOut = false //로그아웃 초기화
+                    CardNaRepository.userToken = data.accessToken //인터셉트 토큰 초기화
+                    CardNaRepository.userSocial = "kakao" //최종 소셜 업데이트
                     _signInWithKakaoSuccess.value = true
                 }
             }.onFailure {
@@ -105,14 +106,14 @@ class LogInViewModel @Inject constructor(
     fun signInWithNaver(accessToken: String) {
         viewModelScope.launch {
             runCatching {
-                CardNaRepository.userToken = accessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
+                CardNaRepository.kakaoUserToken = accessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
                 authRepository.getSignIn("naver") //로그인 서버통신
             }.onSuccess {
                 it.run {
-                    CardNaRepository.userToken = data.accessToken  //유저코튼갱신
-                    CardNaRepository.userToken = data.refreshToken  //유저리프레시토큰갱신
-                    CardNaRepository.logOut = false
-                    CardNaRepository.social = "naver"
+                    CardNaRepository.kakaoUserToken = data.accessToken  //유저코튼갱신
+                    CardNaRepository.kakaoUserToken = data.refreshToken  //유저리프레시토큰갱신
+                    CardNaRepository.kakaoUserlogOut = false
+                    CardNaRepository.kakaoSocial = "naver"
                     _signInWithKakaoSuccess.value = true
                 }
             }.onFailure {
@@ -127,8 +128,8 @@ class LogInViewModel @Inject constructor(
     fun postAuth(lastName: String, firstName: String) {
         Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", lastName + firstName)
         Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.fireBaseToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
-        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userSocial)
+        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userUuid)
         viewModelScope.launch {
             runCatching {
                 authRepository.postAuth(
@@ -138,10 +139,11 @@ class LogInViewModel @Inject constructor(
                     )
                 )
             }.onSuccess {
-                CardNaRepository.userToken = it.data.accessToken  //서버가 준 찐 토큰으로 갱신
-                CardNaRepository.userRefreshToken = it.data.refreshToken  //서버가 준 찐 리프레시 토큰으로 갱신
-                CardNaRepository.firstName = it.data.name  //이름 완전히 들어가면 가입된 사람이란거임
-                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
+                CardNaRepository.kakaoUserToken = it.data.accessToken  //서버가 준 찐 토큰으로 갱신
+                CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken  //서버가 준 찐 리프레시 토큰으로 갱신
+                CardNaRepository.kakaoUserfirstName = it.data.name  //이름 완전히 들어가면 가입된 사람이란거임
+                CardNaRepository.userToken = it.data.accessToken    //최종적으로 인터셉트할 토큰
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
                 Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.message)
                 Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.name)
                 Log.d("ㅡㅡㅡㅡㅡpostAuthvvvvㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.code)

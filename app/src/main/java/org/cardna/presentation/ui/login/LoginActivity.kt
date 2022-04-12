@@ -11,7 +11,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
-import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.local.singleton.CardNaRepository
@@ -33,6 +32,16 @@ class LoginActivity :
     override fun initView() {
         setClickListener()
         loginSuccessObserve()
+
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoSocial)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUuId)
+
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverSocial)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUuId)
     }
 
     private fun setClickListener() {
@@ -78,11 +87,11 @@ class LoginActivity :
                 val refreshToken = NaverIdLoginSDK.getRefreshToken() ?: return
 
                 //이름이 있었음->로그아웃하거나 토큰 만료됨: 그냥 로그인
-                if (CardNaRepository.firstName != "") {
+                if (CardNaRepository.naverUserfirstName != "") {
                     loginViewModel.signInWithNaver(accessToken)
                 }
                 //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
-                else if (CardNaRepository.firstName == "") {
+                else if (CardNaRepository.naverUserfirstName == "") {
                     loginViewModel.signUpWithNaver(accessToken)
                 }
 
@@ -105,11 +114,11 @@ class LoginActivity :
                     Log.e("kakao login", token.refreshToken)
 
                     //이름이 있었음->로그아웃하거나 토큰 만료됨: 그냥 로그인
-                    if (CardNaRepository.firstName != "") {
+                    if (CardNaRepository.kakaoUserfirstName != "") {
                         loginViewModel.signInWithKakao(accessToken)
                     }
                     //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
-                    else if (CardNaRepository.firstName == "") {
+                    else if (CardNaRepository.kakaoUserfirstName == "") {
                         loginViewModel.signUpWithKakao(accessToken)
                     }
                 }

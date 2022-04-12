@@ -32,10 +32,10 @@ class MainActivity :
     }
 
     override fun initView() {
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.firstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoSocial)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUuId)
         initBottomNavigation()
         setBottomNavigationSelectListener()
     }

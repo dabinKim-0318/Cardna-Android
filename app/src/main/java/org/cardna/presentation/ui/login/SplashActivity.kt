@@ -1,7 +1,6 @@
 package org.cardna.presentation.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,7 +10,6 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySplashBinding
-import com.navercorp.nid.oauth.NidOAuthLogin
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
@@ -28,10 +26,15 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
         setFullScreen()
 
 
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.firstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.social)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.uuId)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoSocial)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUuId)
+
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserfirstName)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUserToken)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverSocial)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.naverUuId)
         setNextActivity()
     }
 
@@ -57,14 +60,30 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
 
     //스플레시 끝나고 실행되도록
     private fun setNextActivity() {
-        //이름 없음->회원가입 완전히 안한놈->로그인액티비티로 ㄱㄱ
-        if (CardNaRepository.firstName.isEmpty() && !CardNaRepository.logOut) {
+        //모든 소셜에서 이름이 없으면->회원가입 안함
+        if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
             moveOnLogin()
-            //이름잇음->회원가입한놈->바로 메인으로
-        } else if (CardNaRepository.firstName.isNotEmpty() && !CardNaRepository.logOut) {
+
+            //카카오로 자동로그인
+            //1. 카카오에 이름잇음+카카오에서 로그아웃 안함
+        } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) { //카카오 토큰으로 인터셉트
+            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
             moveMain()
-            //이름있음+로그아웃했음->로그인액티비티로 ㄱㄱ
-        } else if (CardNaRepository.logOut) {
+
+            //네이버로 자동로그인
+            //2.네이버에 이름잇음+네이버에서 로그아웃 안함
+        } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) { //네이버 토큰으로 인터셉트
+            CardNaRepository.userToken = CardNaRepository.naverUserToken
+            moveMain()
+
+            //로그아웃
+            //카카오 이름있음+카카오에서 로그아웃한경우
+        } else if (CardNaRepository.kakaoUserlogOut) {
+            moveOnLogin()
+
+            //로그아웃
+            //네이버 이름있음+네이버에서 로그아웃 한경우
+        } else if (CardNaRepository.naverUserlogOut) {
             moveOnLogin()
         }
     }
