@@ -121,8 +121,8 @@ class SettingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            /*   CardNaRepository.userToken =
-                   "41To6amyvu08kH6GyI3d-Vg-BUCOec9_AJo6iAorDNQAAAGAF1_Y4g"*/
+     //     CardNaRepository.userToken =
+     //           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInV1aWQiOiIyMTk2MjQyNjU5IiwibGFzdE5hbWUiOiLjhLnjhLQiLCJmaXJzdE5hbWUiOiLjhLnjhLQiLCJjb2RlIjoi44S544S044S544S0IzEzNjAiLCJpYXQiOjE2NDk3NTkxNzMsImV4cCI6MTY1MjM1MTE3MywiaXNzIjoiY2FyZG5hIn0.80jgB8UDLtzlXOswSzjcsbtwjPMhmBkZ0Bdv2vRPW3Y"
             runCatching {
                 userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
             }.onSuccess {
