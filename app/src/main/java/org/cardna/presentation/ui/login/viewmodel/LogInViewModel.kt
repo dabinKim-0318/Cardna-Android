@@ -35,17 +35,17 @@ class LogInViewModel @Inject constructor(
     val setNameSuccess: LiveData<Boolean> = _setNameSuccess
 
     //카카오로 가입 또는 재가입
-    fun signUpWithKakao(accessToken: String) {
+    fun signUpWithKakao(kakaoAccessToken: String) {
         Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithKakaoㅡㅡㅡㅡㅡㅡㅡ", "카카오로 가입")
 
         viewModelScope.launch {
             runCatching {
-                CardNaRepository.userToken = accessToken  //일단 레파지토리에 카카오에서 준 토큰 저장함->인터셉트 하도록
+                CardNaRepository.userToken = kakaoAccessToken  //일단 레파지토리에 카카오에서 준 토큰 저장함->인터셉트 하도록
                 authRepository.getSignUp(LoginActivity.KAKAO) //회원가입 서버통신
             }.onSuccess {
-                it.run {
-                    CardNaRepository.userUuid = data.uuid
-                    CardNaRepository.userSocial = data.social
+                it.data.run {
+                    CardNaRepository.userUuid = uuid
+                    CardNaRepository.userSocial = social
 
                     _signUpWithKakaoSuccess.value = true
                 }
@@ -57,16 +57,16 @@ class LogInViewModel @Inject constructor(
     }
 
     //네이버로 가입 또는 재가입
-    fun signUpWithNaver(accessToken: String) {
+    fun signUpWithNaver(naverAccessToken: String) {
         Log.d("ㅡㅡㅡㅡㅡㅡsignUpWithNaverㅡㅡㅡㅡㅡㅡㅡ", "네이버로 가입")
         viewModelScope.launch {
             runCatching {
-                CardNaRepository.userToken = accessToken  //일단 레파지토리에 카카오에서 준 토큰 저장함->인터셉트 하도록
+                CardNaRepository.userToken = naverAccessToken  //일단 레파지토리에 카카오에서 준 토큰 저장함->인터셉트 하도록
                 authRepository.getSignUp(LoginActivity.NAVER) //회원가입 서버통신
             }.onSuccess {
-                it.run {
-                    CardNaRepository.userUuid = data.uuid
-                    CardNaRepository.userSocial = data.social
+                it.data.run {
+                    CardNaRepository.userUuid = uuid
+                    CardNaRepository.userSocial = social
 
                     _signUpWithNaverSuccess.value = true
                 }
@@ -78,18 +78,19 @@ class LogInViewModel @Inject constructor(
     }
 
     //카카오로 재로그인
-    fun signInWithKakao(accessToken: String) {
+    fun signInWithKakao(kakaoAccessToken: String) {
         viewModelScope.launch {
             runCatching {
-                CardNaRepository.userToken = accessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
+                CardNaRepository.userToken = kakaoAccessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
                 authRepository.getSignIn(LoginActivity.KAKAO) //로그인 서버통신
             }.onSuccess {
-                it.run {
-                    CardNaRepository.kakaoUserToken = data.accessToken  //유저코튼갱신
-                    CardNaRepository.kakaoUserRefreshToken = data.refreshToken  //유저리프레시토큰갱신
-                    CardNaRepository.kakaoUserlogOut = false //로그아웃 초기화
-                    CardNaRepository.userToken = data.accessToken //인터셉트 토큰 초기화
+                it.data.run {
+                    CardNaRepository.kakaoUserToken = accessToken  //유저코튼갱신
+                    CardNaRepository.kakaoUserRefreshToken = refreshToken  //유저리프레시토큰갱신
+                    CardNaRepository.userToken = accessToken //인터셉트 토큰 초기화
                     CardNaRepository.userSocial = LoginActivity.KAKAO
+                    CardNaRepository.kakaoUserlogOut = false //로그아웃 초기화
+
                     _signInWithKakaoSuccess.value = true
                 }
             }.onFailure {
@@ -100,18 +101,19 @@ class LogInViewModel @Inject constructor(
     }
 
     //다시 로그인하는 경우
-    fun signInWithNaver(accessToken: String) {
+    fun signInWithNaver(naverAccessToken: String) {
         viewModelScope.launch {
             runCatching {
-                CardNaRepository.userToken = accessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
+                CardNaRepository.userToken = naverAccessToken  //일단 레파지토리에 유저토큰 저장함->인터셉트 하도록
                 authRepository.getSignIn(LoginActivity.NAVER) //로그인 서버통신
             }.onSuccess {
-                it.run {
-                    CardNaRepository.naverUserToken = data.accessToken  //유저코튼갱신
-                    CardNaRepository.naverUserRefreshToken = data.refreshToken  //유저리프레시토큰갱신
-                    CardNaRepository.naverUserlogOut = false //로그아웃 초기화
-                    CardNaRepository.userToken = data.accessToken //인터셉트 토큰 초기화
+                it.data.run {
+                    CardNaRepository.naverUserToken = accessToken  //유저코튼갱신
+                    CardNaRepository.naverUserRefreshToken = refreshToken  //유저리프레시토큰갱신
+                    CardNaRepository.userToken = accessToken //인터셉트 토큰 초기화
                     CardNaRepository.userSocial = LoginActivity.NAVER
+                    CardNaRepository.naverUserlogOut = false //로그아웃 초기화
+
                     _signInWithNaverSuccess.value = true
                 }
             }.onFailure {
@@ -124,10 +126,6 @@ class LogInViewModel @Inject constructor(
 
     //회원가입 완료하기->찐 accessToken, refreshToken 얻어오기
     fun postAuth(lastName: String, firstName: String) {
-        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", lastName + firstName)
-        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.fireBaseToken)
-        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userSocial)
-        Log.d("ㅡㅡㅡㅡㅡㅡpostAuthㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.userUuid)
         viewModelScope.launch {
             runCatching {
                 authRepository.postAuth(
@@ -137,25 +135,31 @@ class LogInViewModel @Inject constructor(
                     )
                 )
             }.onSuccess {
-                if (CardNaRepository.userSocial == "kakao") {
-                    CardNaRepository.kakaoUserToken = it.data.accessToken  //서버가 준 찐 토큰으로 갱신->어차피 리프레시로 재발급받을거긴 한데 일단..
-                    CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken  //서버가 준 찐 리프레시 토큰으로 갱신
-                    CardNaRepository.kakaoUserfirstName = it.data.name  //이름 완전히 들어가면 가입된 사람이란거임
-                } else {
-                    CardNaRepository.naverUserToken = it.data.accessToken  //서버가 준 찐 토큰으로 갱신->어차피 리프레시로 재발급받을거긴 한데 일단..
-                    CardNaRepository.naverUserRefreshToken = it.data.refreshToken  //서버가 준 찐 리프레시 토큰으로 갱신
-                    CardNaRepository.naverUserfirstName = it.data.name  //이름 완전히 들어가면 가입된 사람이란거임
+                it.data.run {
+                    when (CardNaRepository.userSocial) {
+                        "kakao" -> {
+                            CardNaRepository.kakaoUserToken = accessToken  //서버가 준 찐 토큰으로 갱신->어차피 리프레시로 재발급받을거긴 한데 일단..
+                            CardNaRepository.kakaoUserRefreshToken = refreshToken  //서버가 준 찐 리프레시 토큰으로 갱신
+                            CardNaRepository.kakaoUserfirstName = name
+                        }
+                        "naver" -> {
+                            CardNaRepository.naverUserToken = accessToken  //서버가 준 찐 토큰으로 갱신->어차피 리프레시로 재발급받을거긴 한데 일단..
+                            CardNaRepository.naverUserRefreshToken = refreshToken  //서버가 준 찐 리프레시 토큰으로 갱신
+                            CardNaRepository.naverUserfirstName = name  //이름 완전히 들어가면 가입된 사람이란거임
+                        }
+                    }
+
+                    CardNaRepository.userToken = it.data.accessToken       //최종적으로 인터셉트하면서 서버 통신할 토큰
+                    _setNameSuccess.value = true
+
+                    Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
+                    Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.message)
+                    Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.name)
+                    Log.d("ㅡㅡㅡㅡㅡpostAuthvvvvㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.code)
+                    Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.accessToken)
+                    Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.refreshToken)
+
                 }
-                CardNaRepository.userToken = it.data.accessToken       //최종적으로 인터셉트하면서 서버 통신할 토큰
-
-                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡ토큰ㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
-                Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.message)
-                Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.name)
-                Log.d("ㅡㅡㅡㅡㅡpostAuthvvvvㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.code)
-                Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.accessToken)
-                Log.d("ㅡㅡㅡㅡㅡㅡpostAuthvvvㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.refreshToken)
-
-                _setNameSuccess.value = true
             }.onFailure {
                 _setNameSuccess.value = false
                 Timber.e(it.toString())

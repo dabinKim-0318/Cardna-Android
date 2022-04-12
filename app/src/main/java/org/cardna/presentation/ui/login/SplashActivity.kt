@@ -24,7 +24,6 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
-       // CardNaRepository.kakaoUserlogOut = false
 
         Log.d("ㅡㅡㅡㅡㅡㅡkakaoUserfirstNameㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserTokenㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)

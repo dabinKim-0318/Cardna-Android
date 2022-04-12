@@ -32,7 +32,6 @@ class LoginActivity :
     override fun initView() {
         setClickListener()
         loginSuccessObserve()
-
         Log.d("ㅡㅡㅡㅡㅡㅡkakaoUserfirstNameㅡㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserfirstName)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserTokenㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserToken)
         Log.d("ㅡㅡㅡㅡㅡㅡㅡkakaoUserlogOutㅡㅡㅡㅡㅡㅡ", CardNaRepository.kakaoUserlogOut.toString())
@@ -86,11 +85,10 @@ class LoginActivity :
                 val refreshToken = NaverIdLoginSDK.getRefreshToken() ?: return
 
                 //이름이 있었음->로그아웃하거나 토큰 만료됨: 그냥 로그인
-                if (CardNaRepository.naverUserfirstName != "") {
+                if (CardNaRepository.naverUserfirstName.isNotEmpty()) {
                     loginViewModel.signInWithNaver(accessToken)
-                }
-                //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
-                else if (CardNaRepository.naverUserfirstName == "") {
+                    //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
+                } else if (CardNaRepository.naverUserfirstName.isEmpty()) {
                     loginViewModel.signUpWithNaver(accessToken)
                 }
 
@@ -111,11 +109,11 @@ class LoginActivity :
                     Log.e("kakao login", token.refreshToken)
 
                     //이름이 있었음->로그아웃하거나 토큰 만료됨: 그냥 로그인
-                    if (CardNaRepository.kakaoUserfirstName != "") {
+                    if (CardNaRepository.kakaoUserfirstName.isNotEmpty()) {
                         loginViewModel.signInWithKakao(accessToken)
                     }
                     //이름없음->가입 또는 탈퇴한유저 재가입 : 회원가입
-                    else if (CardNaRepository.kakaoUserfirstName == "") {
+                    else if (CardNaRepository.kakaoUserfirstName.isEmpty()) {
                         loginViewModel.signUpWithKakao(accessToken)
                     }
                 }
@@ -154,8 +152,8 @@ class LoginActivity :
         finish()
     }
 
-    companion object{
-        const val KAKAO="kakao"
-        const val NAVER="naver"
+    companion object {
+        const val KAKAO = "kakao"
+        const val NAVER = "naver"
     }
 }

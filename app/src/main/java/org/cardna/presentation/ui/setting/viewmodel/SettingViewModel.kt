@@ -122,8 +122,8 @@ class SettingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            // CardNaRepository.userToken =
-            //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInV1aWQiOiI1UFRvTVd0TkZpRVpOc2loQnUxbDhSRmJVYjBkUkV4UEFHRENJU2thb0xFIiwibGFzdE5hbWUiOiLjhYUiLCJmaXJzdE5hbWUiOiLjhLfjhYUiLCJjb2RlIjoi44WF44S344WFIzU1MjYiLCJpYXQiOjE2NDk3NjYyMDksImV4cCI6MTY1MjM1ODIwOSwiaXNzIjoiY2FyZG5hIn0.7MOFF8OpFKmFFf88VAJwD8r0HTzZYApPtKyHhid1jIc"
+           CardNaRepository.userToken =
+               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInV1aWQiOiI1UFRvTVd0TkZpRVpOc2loQnUxbDhSRmJVYjBkUkV4UEFHRENJU2thb0xFIiwibGFzdE5hbWUiOiLjhLciLCJmaXJzdE5hbWUiOiLjhYfjhYIiLCJjb2RlIjoi44S344WH44WCIzExMzAiLCJpYXQiOjE2NDk3ODQ0ODMsImV4cCI6MTY1MjM3NjQ4MywiaXNzIjoiY2FyZG5hIn0.P8TbkPid5WLFWpsg3YjenMdltlMAnFNTi51O38HYxVo"
             runCatching {
                 userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
             }.onSuccess {

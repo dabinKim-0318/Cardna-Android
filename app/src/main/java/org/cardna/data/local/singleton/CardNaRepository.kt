@@ -118,4 +118,5 @@ object CardNaRepository {
     var fireBaseToken: String
         get() = preferences.getString(FB_KEY, "FireCardNa") ?: ""
         set(value) = preferences.edit { it.putString(FB_KEY, value) }
+
 }
