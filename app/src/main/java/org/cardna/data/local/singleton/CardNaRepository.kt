@@ -59,28 +59,28 @@ object CardNaRepository {
 
     //현재 유저 토큰
     var userToken: String
-        get() = preferences.getString(UT_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(UT_KEY, value) }
+        get() = authPreferences.getString(UT_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }
 
     //현재 유저 소셜
     var userSocial: String
-        get() = preferences.getString(USER_SOCIAL_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(USER_SOCIAL_KEY, value) }
+        get() = authPreferences.getString(USER_SOCIAL_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(USER_SOCIAL_KEY, value) }
 
     //현재 유저 아이디
     var userUuid: String
-        get() = preferences.getString(USER_UUID_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(USER_UUID_KEY, value) }
+        get() = authPreferences.getString(USER_UUID_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(USER_UUID_KEY, value) }
 
     //카카오 유저 토큰
     var kakaoUserToken: String
-        get() = preferences.getString(KAKAO_UT_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(KAKAO_UT_KEY, value) }
+        get() = authPreferences.getString(KAKAO_UT_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(KAKAO_UT_KEY, value) }
 
     //카카오 유저 리프레시 토큰
     var kakaoUserRefreshToken: String
-        get() = preferences.getString(KAKAO_URT_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(KAKAO_URT_KEY, value) }
+        get() = authPreferences.getString(KAKAO_URT_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(KAKAO_URT_KEY, value) }
 
     //카카오 유저 이름
     var kakaoUserfirstName: String
@@ -95,13 +95,13 @@ object CardNaRepository {
 
     //네이버 유저 토큰
     var naverUserToken: String
-        get() = preferences.getString(NAVER_UT_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(NAVER_UT_KEY, value) }
+        get() = authPreferences.getString(NAVER_UT_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(NAVER_UT_KEY, value) }
 
     //네이버 유저 리프레시 토큰
     var naverUserRefreshToken: String
-        get() = preferences.getString(NAVER_URT_KEY, "") ?: ""
-        set(value) = preferences.edit { it.putString(NAVER_URT_KEY, value) }
+        get() = authPreferences.getString(NAVER_URT_KEY, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(NAVER_URT_KEY, value) }
 
 
     //네이버 유저 이름
@@ -116,7 +116,7 @@ object CardNaRepository {
 
     //파이어베이스 토큰
     var fireBaseToken: String
-        get() = preferences.getString(FB_KEY, "FireCardNa") ?: ""
-        set(value) = preferences.edit { it.putString(FB_KEY, value) }
+        get() = authPreferences.getString(FB_KEY, "FireCardNa") ?: ""
+        set(value) = authPreferences.edit { it.putString(FB_KEY, value) }
 
 }
