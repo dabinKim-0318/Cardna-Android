@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amplitude.api.Amplitude
@@ -79,7 +80,7 @@ class CardYouStoreActivity :
 
     private fun setCardYouStoreListObserve() {
         cardPackViewModel.cardYouStoreList.observe(this) {
-            cardYouStoreAdapter.submitList(it.reversed())
+            cardYouStoreAdapter.submitList(it)
         }
     }
 
