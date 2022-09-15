@@ -52,7 +52,7 @@
 
 | [김다빈](https://github.com/dabinKim-0318)                | [이종찬](https://github.com/oxix97)                | [박민우](https://github.com/MinwooP)                | 
 | ------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------- |
-| <img src="https://user-images.githubusercontent.com/84564695/186730603-a0a5a1c7-bed1-43cc-8af9-f5fdce94b8f6.jpg" width="100"> | <img src="https://user-images.githubusercontent.com/84564695/188060617-9cc2fc03-7b57-4c75-8495-84a5ac9289c1.png" width="100"> | <img src="https://user-images.githubusercontent.com/84564695/188060581-71acc75f-cbeb-45aa-b1d9-569ec568fe98.jpg" width="100"> | 
+| <img src="https://user-images.githubusercontent.com/84564695/190450439-e798897d-8049-421e-b54c-919a582a6c5d.png" width="100"> | <img src="https://user-images.githubusercontent.com/84564695/188060617-9cc2fc03-7b57-4c75-8495-84a5ac9289c1.png" width="100"> | <img src="https://user-images.githubusercontent.com/84564695/188060581-71acc75f-cbeb-45aa-b1d9-569ec568fe98.jpg" width="100"> | 
 
 
 본 README는 [dabinKim-0318(김다빈)](https://github.com/dabinKim-0318)이 프로젝트를 회고하며,      
