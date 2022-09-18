@@ -143,7 +143,6 @@ upstream repository는 [이곳](https://github.com/TeamCARDNA/Cardna-Android)을
 |  | Lottie | 스플래시 화면에서 애니메이션 처리가 필요했고, 고품질 애니메이션을 처리할 때 발생할 수 있는 OOM을 피하기 위해 애니메이션 라이브러리를 사용하기로 결정했습니다. 그중 백터 기반이라 용량이 적고 적용이 간단한 Lottie라이브러리를 활용했습니다. |
 |  |Timber | 릴리즈 버전에서 로그를 출력하지 않고, 태그를 별도로 입력하지 않아도 되는 Timber을 사용해 Log를 남겼습니다 |
 |  |Gson | Json형식인 응답 데이터를 java로 파싱하기 위해 Gson라이브러리를 사용했습니다.  |
-| Strategy | Git Flow |   </li> <li><a href="https://github.com/dnd-side-project/dnd-6th-5-android/wiki/%EB%B8%8C%EB%9E%9C%EC%B9%98-%EC%A0%84%EB%9E%B5">브랜치 전략</a></li> <li><a href="https://github.com/TeamCARDNA/CardnaAndroid/projects/1">칸반보드</a></li>  <li><a href="https://github.com/TeamCARDNA/CardnaAndroid/wiki/How-to-use-Git#12-branch">커밋 컨벤션</a> |
 | CI/CD | GitHub Action| Github Action으로 Build 과정을 검사했습니다. develop 브랜치로 병합 이후 발생한 손상을 즉시 해결 함으로 추후 손상을 해결하는 시간을 줄였습니다. |
 | Other Tool | Slack, Notion, Figma, Postman | 팀원간 이슈 알림을 위해 Slack을 사용했고, 작업 진행상황공유와 디자인 작업, 백엔드 파트원과의 커뮤니케이션 등을 위해 해당 Tool들을 사용했습니다 |
 
