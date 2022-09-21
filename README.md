@@ -248,7 +248,7 @@ upstream repository는 [이곳](https://github.com/TeamCARDNA/Cardna-Android)을
 
 <img width="600" alt="화면 캡처 2022-09-02 222437" src="https://user-images.githubusercontent.com/84564695/188155889-55eedc8c-9486-4615-adb8-611f0d0b9567.png">
 
-### 안드로이드 파트 리더
+### ◼ 안드로이드 파트 리더
 카드나 프로젝트에서 안드로이드 파트 리더로서 팀을 이끄는 역할을 했습니다. 당시 개발 프로젝트가 처음인 상황에서 리더 역할을 맡게되어 팀을 잘 이끌 수 있을까 많은 걱정을 했습니다. 2주간 합숙을 하면서 하나의 서비스를 완성하게 되는데, 합숙 전 안드로이드 팀원들끼리 친해지는 게 이후 소통에서도 매우 중요할 것이라 생각했습니다. 그래서 서로 친해질 수 있는 계기를 만들기 위해 노력했고, 이후 프로젝트를 진행하면서 서로의 의견을 나누고 소통하는 데 큰 도움이 됐습니다. 정해진 기한 내에 안드로이드 파트가 개발을 다 끝내지 못하면 기획, iOS, 백엔드 파트원들의 일정에도 영향이 가기 때문에 책임감있게 팀을 이끌기 위해 노력했습니다. 원활한 작업을 위해 역할분담, 이슈관리 등 타임라인에 맞춰 작업이 원활히 진행되도록 전체적인 일정을 관리했습니다. 특히 다른 팀원들이 해결하기 어려워하는 문제가 있거나 지식 공유가 필요한 순간이 많았습니다. 합숙을 할 땐 바로 옆에서 같이 고민하고, 제가 아는 내용도 잘 설명해줄 수 있었지만 합숙 이후 온라인으로 소통해야 할 땐 소통에 한계가 있었습니다. 그래서 바로바로 의견을 나누고 지식을 공유할 수 있도록 '질문밖에 안드'라는 채팅방을 만들었습니다. 덕분에 오프라인만큼 활발하게 의견이 오고갈 수 있었고, 저도 팀원들이 질문해주는 내용을 통해 제가 아는 내용을 점검하고 몰랐던 부분도 알게되는 등 많은 도움을 받았습니다. 이를 통해 지식 공유는 단순히 지식을 나누는 것을 넘어 같이 배우고 성장할 수 있는 방법이라는 것을 알게되었습니다
 
 
@@ -256,25 +256,86 @@ upstream repository는 [이곳](https://github.com/TeamCARDNA/Cardna-Android)을
 <br>
 
 ## ✔ 기술적인 부분
-### MVC -> MVVM 리팩토링
+### ◼ MVC -> MVVM 리팩토링
 공식적인 개발 프로젝트 기간인 2주동안은 MVC패턴으로 프로젝트를 완성했습니다. 최종 발표까지 마친 이후 릴리즈 준비를 위한 기간에 팀원 간 회의를 통해 원활한 유지보수, 성능최적화 등을 위해 MVVM아키텍쳐로 리팩토링하기로 했습니다. MVC패턴을 사용했을 땐 UI컨트롤러가 UI Data를 모두 보유하고 있었기 때문에 코드를 읽기 어려웠고 관심사 분리가 되지 않아 컴포넌트 별 의존성 또한 매우 높은 상태였습니다. MVVM으로 리팩토링을 하면서 StateHolder의 필요성을 가장 크게 느꼈습니다.ViewModel을 사용한 덕분에 UI Controller의 수명주기가 끝나도 UI Data는 초기화되지 않아 원활한 사용자 흐름을 제공할 수 있었기 때문입니다. DataBinding을 통해 View의 의존성을 낮췄고, LiveData사용으로 UI Data업데이트 관리도 수월하게 할 수 있었습니다. MVVM패턴이나 해당 Jetpack component들을 처음부터 사용했으면 이같은 기능의 등장배경, 필요성을 공감하기 어려웠을 것이란 생각이 들었습니다. 리팩토링을 한 덕분에 릴리즈 이후 유지보수를 하는 데 큰 도움이 되었고 안드로이드 권장 아키텍쳐에 대해 깊게 공부한 계기가 되기도 했습니다
 
+<br>
 
-### 공식문서를 보는 습관
+### ◼ 공식문서를 보는 습관
 카드에 들어가는 이미지를 서버와 주고받기 위해 Multipart타입을 이용했고, 회원가입 과정의 편리함을 위해 네이버, 카카오 소셜로그인을 구현했습니다. Multipart, Kakao SDK, Naver SDK를 처음 사용해보면서 새로운 기술에 대한 두려움 때문에 잘 구현할 수 있을 지 막막하기도 했습니다. 이해가 되지 않는 부분은 공식문서를 포함해 다양한 개발 블로그를 참고해 직접 해결하기 위해 노력했고 그래도 이해가 되지 않으면  안드로이드 공식 유튜브, 미디엄 등을 참고해 꼼꼼히 공부했습니다. 이외에도 크고 작은 이슈와 오류들을 마주할 때 포기하지 않고 해결하기 위해 노력하면서 "공식문서를 가장 먼저 보는 습관"이 매우 중요하다는 것을 알게됐습니다. 다른 사람이 작성한 개발 문서를 보는 것도 도움이 되지만 틀린 내용이 있을 수 있고, 보통 중요 내용만 요약된 정보들이 많이 때문에 세세한 동작원리나 구체적인 내용을 알기엔 한계가 있었기 때문입니다. 현재 안드로이드 공식문서를 분석하고 제 언어로 정리한 ['Android Developers 파헤치기 시리즈'](https://velog.io/@dabin/series/Android-Developers-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)를 연재하고 있습니다. 직접 문서를 해석하고 정리하니 기억에 더 잘 남았고 기초적인 부분도 한번 더 학습하고 복습할 수 있었습니다.
 
+<br>
+
+### ◼ 프로젝트 중에 생긴 기술적 어려움
+<img width="260" alt="화면 캡처 2022-09-02 222437" src="https://user-images.githubusercontent.com/84564695/191574083-cc90e058-cfa2-4806-a8d1-f42e9a9da130.png">
 
 
+
+알림 뷰에서는 최근 알림 3개만 보여지고 상단 버튼을 눌러 리스트를 접고 펼쳐볼 수 있도록 구현해야 했습니다. 해당 리스트가 RecyclerView로 구성되어 있기 때문에 item 개수가 정해진 RecyclerView구현이 필요했는데 기존에 개발해본 적 없던 방식이라 어떻게 해야할 지 고민이 들었습니다. 고민 끝에 Adapter에서 리스트의 상태 변경을 나타내는 status를 선언해 해결해보았습니다!
+
+```kotlin
+class FriendRequestAdapter() : androidx.recyclerview.widget.ListAdapter<ResponseGetAlarmData.Data.Request.Requester, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
+  
+  var loadStatus = true  //처음엔 접힌 상태로 시작
+  
+   override fun getItemCount() =
+        if (loadStatus) {  //접힌 상태
+            if (AlarmActivity.DEFAULT_COUNT > currentList.size) {
+                currentList.size
+            } else {
+                AlarmActivity.DEFAULT_COUNT
+            }
+        } else {
+            currentList.size  //펼친 상태라면 모든 아이템을 그린다
+        }
+```
+
+- Adapter의 getItemCount()를 오버라이딩 할 때 사용자의 클릭 이벤트에 따라 loadStatus가 true/false로 변경되도록 선언 한 뒤 접힌상태인지 아닌지에 따라 리턴되는 아이템 개수를 변경했습니다.
+
+```kotlin
+    private fun setUnfoldListener(adapter: FriendRequestAdapter) {
+
+        binding.tvAlarmFriendViewAll.setOnClickListener {
+            if (adapter.loadStatus) {
+                binding.tvAlarmFriendViewAll.text = COLLAPSE_LIST
+                adapter.loadStatus = false
+            } else {
+                binding.tvAlarmFriendViewAll.text = VIEW_ALL
+                adapter.loadStatus = true
+            }
+            friendRequestAdapter.notifyDataSetChanged()  //리스트 크기 매번 변경해야함으로 사용
+        }
+    }
+```
+- AlarmActivity에서는 adapter의 loadStatus에 따라 버튼의 TEXT를 접기/펼치기로 바꾸고 loadStatus 값을 초기화했습니다
+
+<br>
 
 ## ✔ 개인적인 성장
-### 개발 프로젝트 진행 과정
+### ◼ 개발 프로젝트 진행 과정
+
+<img width="860" alt="화면 캡처 2022-09-02 222437" src="https://user-images.githubusercontent.com/84564695/191571534-a28ea897-acf3-4eaa-b8f5-4c133bd0a313.png">
+
+
+
 카드나 프로젝트 시작 전까지 혼자 패스트캠퍼스 강의, SOPT과제, 개인 프로젝트를 통해 안드로이드 개발을 해왔었습니다. 때문에 다른 안드로이드 팀원, 파트원들과 협업하는 프로젝트는 처음이었습니다. 소프트웨어 공학 수업을 들으면서 이론으로만 배웠던 스크럼 회의, 유지보수 등을 실제로 경험하니 하나의 서비스가 만들어지는 과정을 깊이 알게됐습니다. 카드나 프로젝트를 통해 기획, 디자인, 브랜딩, 개발 시작단계와 릴리즈 이후 프로젝트 전반에 걸쳐 해야할 일과 일정을 관리하는 법을 배울 수 있었습니다. 특히 기간 안에 API를 연결해본 경험이 없었기 때문에, 연결해야할 API가 몇개 쯤일 때 작업시간이 어느정도 걸리겠다와 같은 예상이 가지 않았는데 이번 프로젝트 이후로 작업 난이도, 작업 시간 등을 예상할 수 있게 되었고 이에 따라 일정을 조율하는 방법도 알게되었습니다.
 
+<br>
 
-### 디자이너, 서버개발자, 기획자와의 첫 협업
+### ◼ 디자이너, 서버개발자, 기획자와의 첫 협업
+
+<img width="860" alt="화면 캡처 2022-09-02 222437" src="https://user-images.githubusercontent.com/84564695/191575147-9877669b-8c47-4263-8d61-1cab7d8cffef.png">
+
 개발자는 기능명세서, IA, 와이어 프레임을 보고 바로 개발을 시작할 수 있다고 생각했습니다. 하지만 개발자는 기획단계에서 기획자만큼 서비스의 플로우를 잘 알아야 하고 단순히 IA, 와이어프레임을 보고 개발만 하는게 아니라 기간 내에 가능한 기능인지, 가능하지 않다면 어떤 대안이 있는지 등을 함께 고민하고 제안해야 한다는 것을 알게됐습니다. 또한 기획자에게 더 좋은 유저플로우를 제안할 수도 있을 만큼 기획 의도를 깊이 이해하고 있어야 한다고 생각했습니다. 안드로이드 개발자처럼 프론트엔드 개발자는 디자이너와의 소통도 매우 중요하다는 것을 느꼈습니다. 에셋 네이밍 규칙이나 스크롤, 픽스 영역 표시 등 작은 부분도 맞춰가야 디자이너가 의도했던 레이아웃을 빠르고 정확하게 구현할 수 있기 때문입니다. 더불어 API문서를 만들기에 앞서 백엔드 개발자와 데이터 형식, 엔드포인트 등을 함께 협의했고 이에 맞춰 미리 비즈니스 로직을 작성한 덕분에 작업효율을 향상시킬 수 있었습니다
 
-### 사용자 관점에서 개선하기 위한 노력
+<br>
+
+### ◼ git Flow 사용
+git flow를 활용하는 것은 이번이 처음이었는데, 협업에서 git Flow가 얼마나 중요한 지 알게되었씁니다. 처음에 develop브랜치를 만들고 팀원들은 개발 시에 feature 브런치를 만들어 그곳에 작업을 한 후 최종 develop브랜치에 머지하는 과정을 거쳤습니다. pr을 보내고 코드리뷰를 하는 과정, 머지 과정에서 발생하는 conflict를 해결하고, 다른 팀원이 만든 코드를 받으면서 어떤식으로 협업하는 지 잘 알게 되었습니다. 특히 저희 프로젝트는 fork 기능을 활용해 develop브랜치에 불필요한 기록이 남도록 하였는데 이 부분이 develop브랜치를 관리하는 데 매우 유용하고 편리한 방법이라고 느꼈습니다.
+
+<br>
+
+### ◼ 사용자 관점에서 개선하기 위한 노력
 
 <img width="220" src = "https://user-images.githubusercontent.com/84564695/188072464-aefe5408-ae40-4e48-8d7c-64fd8005829d.png" />
 
