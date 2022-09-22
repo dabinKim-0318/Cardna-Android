@@ -54,8 +54,9 @@
 | ------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------- |
 | <img src="https://user-images.githubusercontent.com/84564695/190450439-e798897d-8049-421e-b54c-919a582a6c5d.png" width="100"> | <img src="https://user-images.githubusercontent.com/84564695/188060617-9cc2fc03-7b57-4c75-8495-84a5ac9289c1.png" width="100"> | <img src="https://user-images.githubusercontent.com/84564695/188060581-71acc75f-cbeb-45aa-b1d9-569ec568fe98.jpg" width="100"> | 
 
+<br />
 
-본 README는 [dabinKim-0318(김다빈)](https://github.com/dabinKim-0318)이 프로젝트를 회고하며,      
+✔ 본 README는 [dabinKim-0318(김다빈)](https://github.com/dabinKim-0318)이 프로젝트를 회고하며,      
 공부하고 배운점을 기록하기 위해 작성된 README입니다.    
 upstream repository는 [이곳](https://github.com/TeamCARDNA/Cardna-Android)을 참고해주세요😊    
 
