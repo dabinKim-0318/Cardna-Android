@@ -342,7 +342,7 @@ class FriendRequestAdapter() : androidx.recyclerview.widget.ListAdapter<Response
 <br>
 
 ### ◼ git Flow 사용
-git flow를 활용하는 것은 이번이 처음이었는데, 협업에서 git Flow가 얼마나 중요한 지 알게되었습니다. 처음에 develop브랜치를 만들고 팀원들은 개발 시에 feature 브런치를 만들어 그곳에 작업을 한 후 최종 develop브랜치에 머지하는 과정을 거쳤습니다. pr을 보내고 코드리뷰를 하는 과정, 머지 과정에서 발생하는 conflict를 해결하고, 다른 팀원이 만든 코드를 받으면서 어떤식으로 협업하는 지 잘 알게 되었습니다. 특히 저희 프로젝트는 fork 기능을 활용해 develop브랜치에 불필요한 기록이 남도록 하였는데 이 부분이 develop브랜치를 관리하는 데 매우 유용하고 편리한 방법이라고 느꼈습니다.
+git flow를 활용하는 것은 이번이 처음이었는데, 협업에서 git Flow가 얼마나 중요한 지 알게되었습니다. 처음에 develop브랜치를 만들고 팀원들은 개발 시에 feature 브런치를 만들어 그곳에 작업을 한 후 최종 develop브랜치에 머지하는 과정을 거쳤습니다. pr을 보내고 코드리뷰를 하는 과정, 머지 과정에서 발생하는 conflict를 해결하고, 다른 팀원이 만든 코드를 받으면서 어떤식으로 협업하는 지 잘 알게 되었습니다. 특히 저희 프로젝트는 fork 기능을 활용해 develop브랜치에 불필요한 기록이 남지 않도록 하였는데 이 부분이 develop브랜치를 관리하는 데 매우 유용하고 편리한 방법이라고 느꼈습니다.
 
 <br>
 
